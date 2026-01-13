@@ -1,0 +1,56 @@
+1. Crear proyecto
+nvm use 22.21.1
+npm install -g @ionic/cli
+ionic start
+cd "nombre-proyecto"
+ionic serve
+..........................................
+
+2. Instalar plataforma Android
+npm install @capacitor/android
+npx cap add android
+
+ionic build --prod
+npx cap sync
+npx cap open android
+..........................................
+
+3. Crear arquitectura / pantalla login
+ionic generate page pages/auth/login
+ionic build
+npx cap sync
+..........................................
+
+4. Google login
+npm install @capacitor/browser
+npx cap sync
+..........................................
+
+5. Modificar app.routes.ts
+6. Construir pantalla de Login
+npm install @angular/forms
+..........................................
+
+7. Gestion login
+crear componente => pages/login/html-scss-ts
+crear servicio => core/auth/auth.service.ts
+..........................................
+
+8. Guardar usuario autenticado y token
+crear interface => core/auth/usuario.ts
+crear interface => core/auth/auth-response.model.ts
+mejorar authService
+..........................................
+
+9. Crear Interceptor JWT
+crear interceptor => ng g interceptor core/interceptors/auth
+registrar el interceptor => main.ts
+..........................................
+
+
+
+1️⃣ Guardar token y usuario en AuthService
+2️⃣ Crear Interceptor JWT
+3️⃣ Redirigir según rol (admin / cliente)
+4️⃣ Proteger rutas con AuthGuard
+5️⃣ Crear Home Cliente y Home Admin

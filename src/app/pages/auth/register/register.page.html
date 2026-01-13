@@ -1,0 +1,45 @@
+<ion-content class="register-page" fullscreen>
+  <div class="register-container">
+    <div class="logo-circle">
+      <ion-icon name="person-circle" class="logo-icon" aria-hidden="true"></ion-icon>
+    </div>
+
+    <h1>CREAR CUENTA</h1>
+
+    <form [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
+      <ion-item lines="none" class="custom-input-item">
+        <div class="icon-wrapper" slot="start">
+          <ion-icon name="person-circle" aria-hidden="true"></ion-icon>
+        </div>
+        <ion-input placeholder="Nombre completo" type="text" formControlName="fullName"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="custom-input-item">
+        <div class="icon-wrapper" slot="start">
+          <ion-icon name="mail" aria-hidden="true"></ion-icon>
+        </div>
+        <ion-input placeholder="Email" type="email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="custom-input-item">
+        <div class="icon-wrapper" slot="start">
+          <ion-icon name="lock-closed" aria-hidden="true"></ion-icon>
+        </div>
+        <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="custom-input-item">
+        <div class="icon-wrapper" slot="start">
+          <ion-icon name="lock-closed" aria-hidden="true"></ion-icon>
+        </div>
+        <ion-input placeholder="Confirmar contraseña" type="password" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" class="btn-primary" type="submit">Crear Cuenta</ion-button>
+    </form>
+
+    <div class="signup">
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+    </div>
+  </div>
+</ion-content>

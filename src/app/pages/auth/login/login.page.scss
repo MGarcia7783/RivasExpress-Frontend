@@ -1,0 +1,200 @@
+ion-content.login-page {
+  --background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+
+  height: 100%;
+
+  .login-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start; /* centrar verticalmente */
+    padding: 60px 30px;
+    box-sizing: border-box;
+  }
+
+  .logo-circle {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: #2b80ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px; /* margen amplio debajo del logo */
+    box-shadow: 0 10px 26px rgba(43, 128, 255, 0.18);
+  }
+
+  .logo-icon {
+    font-size: 42px;
+    color: #ffffff;
+  }
+
+  h1 {
+    margin: 0 0 18px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .login-form {
+    width: 100%;
+  }
+
+  /* Reglas obligatorias para inputs */
+  .custom-input-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --padding-start: 10px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 14px rgba(20, 40, 80, 0.06);
+    align-items: center;
+  }
+
+  .custom-input-item .icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 2px;
+  }
+
+  .custom-input-item .icon-wrapper ion-icon {
+    color: #6b7280;
+    font-size: 20px;
+  }
+
+  .custom-input-item ion-input {
+    --padding-start: 15px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  /* Ensure placeholder is visible across browsers (Edge/Chromium) */
+  .custom-input-item ion-input::part(native) {
+    color: #111827; /* input text color */
+  }
+  .custom-input-item ion-input::part(native)::-webkit-input-placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+  .custom-input-item ion-input::part(native)::-moz-placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+  .custom-input-item ion-input::part(native):-ms-input-placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+  .custom-input-item ion-input::part(native)::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+
+  .btn-primary {
+    --background: #2b80ff;
+    --border-radius: 10px;
+    border-radius: 10px;
+    margin-top: 8px;
+    box-shadow: 0 10px 22px rgba(43, 128, 255, 0.22);
+    color: #ffffff;
+    height: 55px;
+    font-weight: 600;
+  }
+
+  .btn-google {
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid #e6e6e6;
+    background: #ffffff;
+    box-shadow: 0 6px 12px rgba(10, 10, 10, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* icono alineado con iconos de inputs */
+    height: 55px;
+    font-weight: 600;
+
+    padding-left: 0;
+  }
+
+  /* UX: mostrar cursor pointer en elementos clickeables sin romper estilos nativos */
+  ion-button {
+    cursor: pointer;
+  }
+  /* Asegurar en el interior del shadow DOM si aplica */
+  ion-button::part(native) {
+    cursor: pointer;
+  }
+  .btn-primary,
+  .btn-google {
+    cursor: pointer;
+  }
+  .signup a,
+  .signup .link-btn {
+    cursor: pointer;
+  }
+
+  .btn-google .google-icon {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    margin-right: 12px;
+  }
+
+  .signup {
+    margin-top: 18px;
+    color: #667085;
+    font-size: 14px;
+    text-align: center;
+  }
+  .signup a,
+  .signup .link-btn {
+    color: #1976d2;
+    font-weight: 600;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  /* Validation error text */
+  .error-text {
+    color: #dc2626; /* red-600 */
+    font-size: 12px;
+    margin: -8px 0 10px 14px;
+    display: block;
+  }
+  .error-text small {
+    display: block;
+  }
+
+  @media (max-width: 420px) {
+    .logo-circle {
+      width: 80px;
+      height: 80px;
+    }
+    .logo-icon {
+      font-size: 34px;
+    }
+    h1 {
+      font-size: 18px;
+    }
+  }
+}
+
+/* Ensure content scrolls nicely on small devices */
+ion-content.login-page .scroll-content {
+  display: flex;
+}

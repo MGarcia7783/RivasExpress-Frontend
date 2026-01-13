@@ -1,0 +1,112 @@
+<ion-content class="login-page" fullscreen>
+  <div class="login-container">
+    <div class="logo-circle">
+      <ion-icon
+        name="lock-closed"
+        class="logo-icon"
+        aria-hidden="true"
+      ></ion-icon>
+    </div>
+
+    <h1>INICIAR SESIÓN</h1>
+
+    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
+      <ion-item lines="none" class="custom-input-item">
+        <div class="icon-wrapper" slot="start">
+          <ion-icon name="mail" aria-hidden="true"></ion-icon>
+        </div>
+        <ion-input
+          placeholder="Email"
+          type="email"
+          formControlName="userName"
+        ></ion-input>
+      </ion-item>
+      @if (loginForm.get('userName')?.invalid &&
+      (loginForm.get('userName')?.touched || loginForm.get('userName')?.dirty))
+      {
+      <div class="error-text">
+        @if (loginForm.get('userName')?.errors?.['required']) {
+        <small>El email es obligatorio.</small>
+        } @if (loginForm.get('userName')?.errors?.['userName']) {
+        <small>Introduce un email válido.</small>
+        }
+      </div>
+      }
+
+      <ion-item lines="none" class="custom-input-item">
+        <div class="icon-wrapper" slot="start">
+          <ion-icon name="person-circle" aria-hidden="true"></ion-icon>
+        </div>
+        <ion-input
+          placeholder="Contraseña"
+          type="password"
+          formControlName="password"
+        ></ion-input>
+      </ion-item>
+
+      @if (loginForm.get('password')?.invalid &&
+      (loginForm.get('password')?.touched || loginForm.get('password')?.dirty))
+      {
+      <div class="error-text">
+        @if (loginForm.get('password')?.errors?.['required']) {
+        <small>La contraseña es obligatoria.</small>
+        } @if (loginForm.get('password')?.errors?.['minlength']) {
+        <small>La contraseña debe tener al menos 6 caracteres.</small>
+        }
+      </div>
+      }
+
+      <ion-button
+        expand="block"
+        class="btn-primary"
+        type="submit"
+        [disabled]="loginForm.invalid"
+        >Iniciar Sesión</ion-button
+      >
+
+      <ion-button
+        fill="clear"
+        expand="block"
+        class="btn-google"
+        (click)="loginWithGoogle()"
+      >
+        <span class="google-icon" slot="start" aria-hidden="true">
+          <!-- Google G SVG -->
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 533.5 544.3"
+            xmlns="http://www.w3.org/2000/svg"
+            focusable="false"
+            aria-hidden="true"
+          >
+            <path
+              fill="#4285F4"
+              d="M533.5 278.4c0-18.5-1.6-36.3-4.7-53.6H272v101.4h147.4c-6.3 34-25.1 62.8-53.6 82v68h86.6c50.7-46.7 80.1-115.6 80.1-197.8z"
+            />
+            <path
+              fill="#34A853"
+              d="M272 544.3c72.6 0 133.6-24 178.1-65.4l-86.6-68c-24.1 16.2-55 25.7-91.5 25.7-70.4 0-130-47.6-151.3-111.6H31.8v69.9C76.2 486 168 544.3 272 544.3z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M120.7 324.9c-8.6-25.6-8.6-53 0-78.6V176.4H31.8c-29.9 59.8-29.9 130.2 0 190l88.9-41.5z"
+            />
+            <path
+              fill="#EA4335"
+              d="M272 109.1c38.9 0 73.9 13.4 101.5 39l76-76C405.6 24.6 345.2 0 272 0 168 0 76.2 58.3 31.8 147.4l88.9 69.9C142 156.7 201.6 109.1 272 109.1z"
+            />
+          </svg>
+        </span>
+        Iniciar con Google
+      </ion-button>
+    </form>
+
+    <div class="signup">
+      ¿No tienes cuenta?
+      <button type="button" class="link-btn" (click)="goToRegister()">
+        Regístrate
+      </button>
+    </div>
+  </div>
+</ion-content>
