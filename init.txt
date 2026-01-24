@@ -163,6 +163,23 @@ Seccón de mis pedidos
 
 Publicación
 Configuar variales de conexion => environment.prod
-limpiar build anteriro = rm -fr dist
-ejecutar =>
-ionic build --prod
+subir proyecto a github
+Configurar deploy => Netifly
+Agregar variables =>
+  Key: NPM_FLAGS
+  VALUE: --legacy-peer-deps
+
+Configuar angular.json
+
+"budgets": [
+  {
+    "type": "initial",
+    "maximumWarning": "2mb",
+    "maximumError": "5mb"
+  },
+  {
+    "type": "anyComponentStyle",
+    "maximumWarning": "10kb",  // Antes estaba en 2kb
+    "maximumError": "20kb"    // Antes estaba en 4kb
+  }
+]
