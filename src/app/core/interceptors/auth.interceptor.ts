@@ -30,10 +30,6 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       });
 
-      console.log('URL:', req.url);
-      console.log('TOKEN:', token);
-
-
       // Continuamos con la petición modificada
       return next.handle(authReq);
     }

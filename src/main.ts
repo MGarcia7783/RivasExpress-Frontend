@@ -5,7 +5,11 @@ import {
   withPreloading,
   PreloadAllModules,
 } from '@angular/router';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import {
   IonicRouteStrategy,
   provideIonicAngular,
@@ -14,6 +18,11 @@ import {
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { AuthInterceptor } from './app/core/interceptors/auth.interceptor';
+import { addIcons } from 'ionicons';
+import { APP_ICONS } from './app/shared/app-icons';
+
+// Registrar todos lo iconos
+addIcons(APP_ICONS);
 
 bootstrapApplication(AppComponent, {
   providers: [

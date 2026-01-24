@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -13,13 +14,16 @@ import {
   IonInput,
   IonButton,
   IonIcon,
+  IonText,
 } from '@ionic/angular/standalone';
 import { RouterModule, Router } from '@angular/router';
-
-import { addIcons } from 'ionicons';
-import { lockClosed, personCircle, mail } from 'ionicons/icons';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { InteractionService } from 'src/app/shared/interaction.service';
+import { isPlatform } from '@ionic/angular';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+
+const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
+const PASSW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
 
 @Component({
   selector: 'app-login',
@@ -27,6 +31,7 @@ import { InteractionService } from 'src/app/shared/interaction.service';
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [
+    IonText,
     IonIcon,
     IonButton,
     IonInput,
@@ -38,90 +43,135 @@ import { InteractionService } from 'src/app/shared/interaction.service';
     RouterModule,
   ],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   // Inyección de dependencias
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
   private interaction = inject(InteractionService);
 
-  // Formulario reactivo para login
-  loginForm: FormGroup = this.fb.group({
-    userName: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-  });
+  // Variable booleana
+  public passwordToggle: boolean = false;
 
-  constructor() {
-    // Registrar iconos necesarios para ion-icon
-    addIcons({
-      mail: mail,
-      'person-circle': personCircle,
-      'lock-closed': lockClosed,
+  // Formulario reactivo para login
+  public frmLogin!: FormGroup;
+
+  // Crear formulario
+  createFormLogin() {
+    this.frmLogin = this.fb.group({
+      userName: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.pattern(PASSW_PATTERN),
+        ],
+      ],
     });
   }
 
-  async onSubmit(): Promise<void> {
-    // Verificar si el formulario es válido
-    if (this.loginForm.invalid) {
+  // Alias para acceder a los controles del formulario
+  get fr(): { [key: string]: AbstractControl } {
+    return this.frmLogin.controls;
+  }
+
+  // Validar si un control es inválido
+  isInvalid(controlName: string): boolean {
+    const control = this.frmLogin.get(controlName);
+    return !!(control && control.invalid && (control.touched || control.dirty));
+  }
+
+  // Inicializar componentes
+  ngOnInit(): void {
+    this.createFormLogin();
+  }
+
+  // Liberar recursos
+  ionViewWillLeave(): void {
+    this.frmLogin.reset();
+    this.interaction.blurActiveElement();
+  }
+
+  // Login normal
+  public async login(): Promise<void> {
+    if (this.frmLogin.invalid) {
+      this.frmLogin.markAllAsTouched();
+      return;
+    }
+
+    const { userName, password } = this.frmLogin.value;
+
+    await this.interaction.showLoading('Iniciando sesión...');
+
+    this.authService.login(userName, password).subscribe({
+      next: async (response) => {
+        await this.interaction.dismissLoading();
+
+        await this.interaction.showToast(
+          `Bienvenido: ${response?.usuario.nombreCompleto ?? ''}`,
+          'success',
+          'person-circle-outline',
+          2500,
+        );
+
+        // Redirigir según rol
+        if (response.usuario.rol === 'Administrador') {
+          this.router.navigate(['/admin/home']);
+        } else {
+          this.router.navigate(['/cliente/home']);
+        }
+      },
+      error: async (err) => {
+        await this.interaction.dismissLoading();
+        await this.interaction.mostrarError(err);
+      },
+    });
+  }
+
+  // Login con google (solo movil)
+  async loginWithGoogle() {
+    if (!isPlatform('capacitor')) {
       await this.interaction.showToast(
-        'Ingrese un correo y contraseña válidos.',
-        2500
+        'Solo disponible en la app móvil.',
+        'warning',
       );
       return;
     }
 
-    const { userName, password } = this.loginForm.value;
+    await this.interaction.showLoading('Conectando con Google...');
 
-    try {
-      await this.interaction.showLoading('Iniciando sesión...');
+    // 1. Abrir ventana de Google
+    const googleUser = await GoogleAuth.signIn();
+    const idToken = googleUser.authentication.idToken;
 
-      this.authService.login(userName, password).subscribe({
-        next: async (response) => {
-          await this.interaction.dismissLoading();
+    // 2. Enviar token a tu API de C#
+    this.authService.loginConGoogle(idToken).subscribe({
+      next: async (res) => {
+        await this.interaction.dismissLoading();
 
-          // Mensaje de bienvenida
-          await this.interaction.showToast(
-            `Bienvenido de nuevo: ${response?.usuario.nombreCompleto ?? ''}`,
-            2500
-          );
+        await this.interaction.showToast(
+          `Bienvenido: ${res.usuario.nombreCompleto}`,
+          'success',
+          'person-circle-outline',
+        );
 
-          // Navegar a la página principal
-          this.router.navigate(['/home']);
-        },
-        error: async (error) => {
-          await this.interaction.dismissLoading();
-          this.handeleLoginError(error);
-        },
-      });
-    } catch (error) {
-      await this.interaction.dismissLoading();
-      this.handeleLoginError(error);
-    }
+        // 3. Redirigir según rol
+        if (res.usuario.rol === 'Administrador') {
+          this.router.navigate(['/admin/home']);
+        } else {
+          this.router.navigate(['/cliente/home']);
+        }
+      },
+      error: async (err) => {
+        await this.interaction.dismissLoading();
+        await this.interaction.mostrarError(err);
+      },
+    });
   }
 
-  private async handeleLoginError(error: any): Promise<void> {
-    if (error.status === 401) {
-      await this.interaction.presentAlert(
-        'Error de autenticación',
-        'Credenciales incorrectas. Por favor, intente de nuevo.'
-      );
-      return;
-    }
-
-    await this.interaction.presentAlert(
-      'Error',
-      'Ocurrió un error al iniciar sesión. Por favor, intente de nuevo más tarde.'
-    );
-  }
-
-  loginWithGoogle(): void {
-    console.log('Lógica con Google (pendiente)');
-  }
-
+  // Navegar a la página de registro
   goToRegister(): void {
-    const active = document.activeElement as HTMLElement | null;
-    active?.blur();
-
     setTimeout(() => this.router.navigate(['/auth/register']), 200);
   }
 }

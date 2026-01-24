@@ -1,0 +1,201 @@
+ion-content {
+  --background: #f8f9fc;
+}
+
+.main-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Cabecera Recta y Moderna
+.order-header-box {
+  background: var(--ion-color-primary);
+  padding: 30px 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: white;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+
+  h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: -1px;
+  }
+  p {
+    margin: 5px 0 0;
+    opacity: 0.8;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  ion-badge {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+  }
+}
+
+.sections-container {
+  padding: 15px 20px;
+  margin-top: -30px; // Eleva las tarjetas sobre el azul
+}
+
+.section-title {
+  font-weight: 700;
+  color: #475569;
+  margin: 25px 0 12px 5px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+// Tarjeta de Información
+.info-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+
+  ion-item {
+    --background: transparent;
+    h3 {
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+    }
+    p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+  }
+}
+
+.quick-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  .btn-action {
+    flex: 1;
+    height: 48px;
+    --border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    &.whatsapp {
+      --background: #25d366;
+      --color: white;
+    }
+    &.maps {
+      --background: #f1f5f9;
+      --color: #1e293b;
+    }
+  }
+}
+
+// ESTILO TICKET DE COMIDA
+.ticket-container {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  position: relative;
+  border: 1px solid #f1f5f9;
+
+  .ticket-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+  }
+
+  .ticket-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; // Alinea el bloque de texto con el precio
+    margin-bottom: 12px;
+
+    .item-desc {
+      display: flex;
+      align-items: center; // <--- ESTO ES LO QUE FALTA (Alinea cantidad y nombre)
+      gap: 12px; // Espacio horizontal entre el número y el texto
+
+      .qty {
+        font-weight: 800;
+        color: var(--ion-color-primary);
+        font-size: 1.1rem;
+        line-height: 1; // Fuerza a que no tenga espacio extra arriba/abajo
+        min-width: 20px; // Evita que se mueva si el número cambia de 1 a 2 cifras
+      }
+
+      .name {
+        font-weight: 600;
+        color: #334155;
+        font-size: 1rem;
+        line-height: 1; // Mismo line-height para que la base sea igual
+      }
+    }
+
+    .price {
+      font-weight: 700;
+      color: #1e293b;
+    }
+  }
+
+  .ticket-divider {
+    border-top: 2px dashed #e2e8f0;
+    margin: 20px 0;
+  }
+
+  .ticket-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      font-weight: 700;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    strong {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--ion-color-primary);
+    }
+  }
+
+  .payment-info {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 12px;
+    color: #475569;
+    font-size: 0.85rem;
+    ion-icon {
+      font-size: 1.2rem;
+      color: #10b981;
+    }
+  }
+}
+
+.info-footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  padding-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

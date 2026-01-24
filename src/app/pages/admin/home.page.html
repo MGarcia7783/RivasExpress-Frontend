@@ -1,0 +1,80 @@
+<!-- Encabezado superiror -->
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <!-- Botón menú desplegable -->
+    <ion-buttons slot="start"> </ion-buttons>
+
+    <ion-title>Panel de Control</ion-title>
+
+    <!-- Botón logout -->
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" class="custom-logout-btn">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Popover que actúa como menú -->
+<ng-template #menuPopover>
+  <ion-list>
+    <ion-item button (click)="navTo('/perfil')">
+      <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-item>
+    <ion-item button (click)="navTo('/configuracion')">
+      <ion-icon slot="start" name="settings-outline"></ion-icon>
+      <ion-label>Configuración</ion-label>
+    </ion-item>
+    <ion-item button (click)="navTo('/ayuda')">
+      <ion-icon slot="start" name="help-circle-outline"></ion-icon>
+      <ion-label>Ayuda</ion-label>
+    </ion-item>
+  </ion-list>
+</ng-template>
+
+<!-- Contenido principal -->
+<ion-content [fullscreen]="true">
+  <!-- Cabecera visual decorativa -->
+  <div class="dashboard-header">
+    <div class="welcome-msg">
+      <!-- Saludo dinámico -->
+      <h1>Hola, <span>{{ userName }}</span></h1>
+      <p>¿Qué gestión realizaremos hoy?</p>
+    </div>
+  </div>
+
+  <!-- Contenedor principal de tarajetas -->
+  <div class="container">
+    <!-- Menú de módulos / tarjetas administrativas -->
+    <ion-grid>
+      <ion-row>
+        @for (item of adminModules; track item.title) {
+        <ion-col size="6" size-md="4" size-lg="3">
+          <div class="menu-card" (click)="navTo(item.path)">
+
+            <!-- Badge para notificaciones o conteo -->
+            @if (item.badgeSignal !== undefined && item.badgeSignal !== null) {
+            <span class="custom-badge" [class.badge-zero]="item.badgeSignal() === 0">{{ item.badgeSignal() }}</span>
+            }
+
+            <!-- Icono de la tarjeta con fondo personalizado -->
+            <div class="icon-box" [style.background-color]="item.color + '15'">
+              <ion-icon
+                [name]="item.icon"
+                [style.color]="item.color"
+              ></ion-icon>
+            </div>
+
+            <!-- Información de la tarjeta -->
+            <div class="card-info">
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.label }}</p>
+            </div>
+          </div>
+        </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

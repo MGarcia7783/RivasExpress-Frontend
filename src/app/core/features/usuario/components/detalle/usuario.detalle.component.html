@@ -1,0 +1,136 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/usuario" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle del Cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main-wrapper">
+    @if (isLoading()) {
+      <div class="ion-text-center ion-padding loader-container">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+        <p>Cargando información...</p>
+      </div>
+    } @else {
+      @if (user(); as usuario) {
+        <!-- Cabecera de Perfil más compacta -->
+        <div class="profile-header">
+          <div class="avatar-container">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </div>
+          <div class="profile-info">
+            <h2>{{ usuario.nombreCompleto }}</h2>
+            <p>{{ usuario.rol }}</p>
+          </div>
+        </div>
+
+        <!-- Contenedor de Métricas -->
+        <div class="stats-container">
+          <div class="stat-card">
+            <span class="stat-value">{{ usuario.totalPedidos }}</span>
+            <span class="stat-label">Total Pedidos</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">{{ usuario.frecuenciaCompra || 0 }}</span>
+            <span class="stat-label">Días Frecuencia</span>
+          </div>
+        </div>
+
+        <div class="sections-container">
+          <!-- Sección de Contacto con botones estilizados -->
+          <!--h6 class="section-title">Contacto Rápido</h6-->
+          <div class="quick-contact">
+            <ion-button
+              (click)="irAWhatsapp()"
+              class="btn-contact whatsapp"
+              mode="ios"
+            >
+              <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+              WhatsApp
+            </ion-button>
+          </div>
+
+          <!-- Sección de Seguridad mejorada -->
+          <h6 class="section-title">Seguridad y Acceso</h6>
+          <div class="settings-card">
+            <ion-item lines="none">
+              <div
+                class="icon-circle-status"
+                slot="start"
+                [class.active]="usuario.esActivo"
+              >
+                <ion-icon name="power-outline"></ion-icon>
+              </div>
+              <ion-label>
+                <h2 [class.text-danger]="!usuario.esActivo">
+                  {{
+                    usuario.esActivo
+                      ? "Cuenta Habilitada"
+                      : "Cuenta Suspendida"
+                  }}
+                </h2>
+                <p>
+                  {{
+                    usuario.esActivo
+                      ? "Acceso al total"
+                      : "Acceso restringido"
+                  }}
+                </p>
+              </ion-label>
+              <div style="margin-right: 20px">
+                <ion-toggle
+                  [checked]="usuario.esActivo"
+                  (ionChange)="cambiarEstado($event)"
+                  color="success"
+                >
+                </ion-toggle>
+              </div>
+            </ion-item>
+          </div>
+
+          <!-- SECCIÓN de pedidos recientes -->
+          <h6 class="section-title">Pedidos Recientes</h6>
+          <div class="orders-list">
+            @for (pedido of usuario.pedidosRecientes; track pedido.id) {
+              <div class="order-item-card" (click)="verPedido(pedido.id)">
+                <div class="order-icon" [class]="pedido.estado.toLowerCase()">
+                  <ion-icon name="bag-handle-outline"></ion-icon>
+                </div>
+                <div class="order-info">
+                  <div class="order-header">
+                    <span class="order-id">#{{ pedido.id }}</span>
+                    <span class="order-date">{{
+                      pedido.fecha | date: "dd/MM/yyyy"
+                    }}</span>
+                  </div>
+                  <div class="order-footer">
+                    <span class="order-total">{{
+                      pedido.total | currency
+                    }}</span>
+                    <ion-badge
+                      [color]="getEstadoColor(pedido.estado)"
+                      mode="ios"
+                      >{{ pedido.estado }}</ion-badge
+                    >
+                  </div>
+                </div>
+                <ion-icon
+                  name="chevron-forward-outline"
+                  color="medium"
+                ></ion-icon>
+              </div>
+            } @empty {
+              <div class="empty-orders">
+                <ion-icon name="receipt-outline"></ion-icon>
+                <p>Sin historial de pedidos.</p>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+</ion-content>

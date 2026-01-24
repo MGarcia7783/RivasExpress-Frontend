@@ -47,10 +47,122 @@ crear interceptor => ng g interceptor core/interceptors/auth
 registrar el interceptor => main.ts
 ..........................................
 
+10. Redirigir según rol (Administrador / cliente)
+crear componentes
+ionic generate page pages/admin/home
+ionic generate page pages/cliente/home
+
+npm install jwt-decode => decodificar el token y extrae el rol
+obtener rol del usuario auteinticado => auth.service.ts
+
+Proteger rutas con AuthGuard
+ng generate guard core/guards/auth --no-functional
+modficar login(onSubmit) en login.page.ts
+
+modificar app.routes.ts
+..........................................
+
+11. Login con Google
+Instalar plugin para autenticación de google =>
+npm install @codetrix-studio/capacitor-google-auth --save --force
+npx cap sync
+..........................................
+
+Registrar usuario
+1. Crear intefaz => ng generate interface pages/auth/register/ICrearUsuario
+2. Crear servicio => ng generate service pages/auth/register/service/usuario.register.service
+3. Crear componente => gn generate component pages/auth/register/register.page
+4. Modificar componente register.page.ts
+5. Modificar componente register.page.html
 
 
-1️⃣ Guardar token y usuario en AuthService
-2️⃣ Crear Interceptor JWT
-3️⃣ Redirigir según rol (admin / cliente)
-4️⃣ Proteger rutas con AuthGuard
-5️⃣ Crear Home Cliente y Home Admin
+Sección dashboard => Admin
+1. Registrar los iconos necesarios para la interfaz => home.page.ts
+2. Diseño de la interfaz => home.page.html
+3. Estilos de la interfaz => home.page.scss
+4. Crear componentes =>
+ng generate component core/features/usuario/components/usuario.page --type=component --flat
+4. Definir las sub-rutas => app.routes.ts
+..........................................
+
+Sección de categorias
+1. Definir interfaz de categorias
+ng generate interface => core/features/categoria/interface/ICategoria
+ng generate interface => core/shared/IPageResponse<T>
+2. Crear servicio de categorias =>
+ng generate service core/features/categoria/services/categoria.service --flat
+3. Generar componente
+ng generate component core/features/categoria/components/listado/categoria.listado --type=component --flat
+4. Implementación => ts, html y scss.
+
+5. Generar componente para registro
+ng generate component core/features/categoria/components/registro/categoria.registro --type=component --flat
+6. Implementación => ts, html y scss.
+7. Configiguar rutas => app.routes.ts
+..........................................
+
+Sección de productos
+1. Definir interface de productos
+2. Crear servicio productos
+3. Generar componente
+4. Implemetar => ts, html y scss
+
+5. Generar componente para registro
+6. Implementación => ts, html y scss
+Instalar paquete para la cámara
+npm install @capacitor/camera --legacy-peer-deps
+npx cap syn => Ctr + Shift + P
+7. Confirguar rutas
+..........................................
+
+Sección de usuarios
+1. Crear servicio de usuarios => usuario.service
+2. Crear interfaz de usuario => iusuario
+3. Generar componente => usuario.listado.component
+4. Implementar ts, html y css
+
+5. Generar compnente => usuario.detalle.component
+6. Implementar ts. html y css
+..........................................
+
+Sección de pedidos
+1. Crear interfaz de pedido => IPedido, IDetallePedido
+2. Crear servicio de pedido => pedido.service
+3. Generar componente => pedido.listado
+4. Implementar ts. html y css
+
+Ficha de detalle del pedido
+5. Generar componente => pedido.detalle.admin
+Implementar ts. html y css
+..........................................
+
+Sección home del cliente
+1. Crear servicio de carrito => carrito.service
+2. Generar componente => cliente.home.page
+3. Implementar ts. html y css
+..........................................
+
+Sección de carrito de compras
+1. Crear método para enviar pedido al servidor => carrito.service
+2. Generar componente => carrito.componente
+3. Implementar ts, html y css
+..........................................
+
+Sección de confirmar pedido
+1. Crear método getUsuarioLogueado => aut.service
+2. Generar componente => pedido.confirmar.component
+3. Implementar ts, html y css
+..........................................
+
+Seccón de mis pedidos
+1. Crear método gestión de pedidos => pedido.service
+2. Definir ruta
+3. Generar componente => mis.pedidos.component
+4. Implementar ts, html y css
+..........................................
+
+Publicación
+Configuar variales de conexion => environment.prod
+limpiar build anteriro = rm -fr dist
+ejecutar =>
+ionic build --prod

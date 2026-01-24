@@ -34,4 +34,78 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+/* ================= MODAL TIPO BOTTOM SHEET ================= */
+.user-bottom-sheet {
+  --border-radius: 16px 16px 0 0;
+  --background: #ffffff;
+  --box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.1);
+
+  .sheet-content {
+    padding: 16px;
+  }
+
+  .sheet-header {
+    text-align: center;
+    margin-bottom: 12px;
+
+    .handle-bar {
+      width: 36px;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 2px;
+      margin: 0 auto 8px auto;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #334155;
+      margin: 0;
+    }
+  }
+
+  .sheet-menu-grid {
+    display: flex;
+    justify-content: space-around;
+
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #334155;
+      cursor: pointer;
+      gap: 4px;
+
+      .icon-wrapper {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: white;
+
+        &.blue {
+          background: #3b82f6;
+        }
+        &.orange {
+          background: #f97316;
+        }
+        &.green {
+          background: #22c55e;
+        }
+
+        ion-icon {
+          font-size: 1.6rem;
+        }
+      }
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+}

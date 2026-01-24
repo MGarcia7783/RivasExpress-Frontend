@@ -1,0 +1,128 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cliente/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title mode="ios">Mi Carrito</ion-title>
+    <ion-buttons slot="end">
+      @if (carritoService.cantidadTotal() > 0) {
+        <ion-button (click)="carritoService.limpiarCarrito()" color="light">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main-wrapper">
+    <div class="cart-list ion-padding">
+      @for (item of carritoService.itemsLista(); track item.idProducto) {
+        <div class="cart-item-card">
+          <!-- FILA SUPERIOR: Nombre y Subtotal Grande -->
+          <div class="card-header-row">
+            <h3 class="product-name">{{ item.nombreProducto }}</h3>
+            <div class="item-subtotal">
+              {{
+                item.precioUnitario * item.cantidad
+                  | currency: "C$" : "symbol" : "1.0-0"
+              }}
+            </div>
+          </div>
+
+          <!-- FILA INFERIOR: Detalle y Acciones -->
+          <div class="card-footer-row">
+            <div class="unit-info">
+              <span class="label">Precio unitario</span>
+              <span class="value">{{
+                item.precioUnitario | currency: "C$" : "symbol" : "1.0-0"
+              }}</span>
+            </div>
+
+            <div class="actions-right">
+              <div class="qty-controls">
+                <ion-button
+                  fill="clear"
+                  (click)="
+                    carritoService.actualizarCantidad(item.idProducto, -1)
+                  "
+                >
+                  <ion-icon
+                    name="remove-circle-outline"
+                    slot="icon-only"
+                  ></ion-icon>
+                </ion-button>
+                <span class="qty-label">{{ item.cantidad }}</span>
+                <ion-button
+                  fill="clear"
+                  (click)="
+                    carritoService.actualizarCantidad(item.idProducto, 1)
+                  "
+                >
+                  <ion-icon
+                    name="add-circle-outline"
+                    slot="icon-only"
+                  ></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button
+                fill="clear"
+                color="danger"
+                (click)="carritoService.eliminarItem(item.idProducto)"
+                class="btn-delete"
+              >
+                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-cart-state">
+          <div class="icon-circle">
+            <ion-icon name="cart-outline"></ion-icon>
+          </div>
+          <h2>Tu carrito está vacío</h2>
+          <p>Agrega tus platillos favoritos para verlos aquí.</p>
+          <ion-button
+            expand="block"
+            shape="round"
+            (click)="seguirComprando()"
+            class="btn-continue"
+            >VER MENÚ</ion-button
+          >
+        </div>
+      }
+    </div>
+  </div>
+</ion-content>
+
+@if (carritoService.cantidadTotal() > 0) {
+  <ion-footer class="ion-no-border footer-summary">
+    <div class="summary-card ion-padding">
+      <div class="row-summary">
+        <span>Productos ({{ carritoService.cantidadTotal() }})</span>
+        <strong>{{
+          carritoService.montoTotal() | currency: "C$" : "symbol" : "1.2-2"
+        }}</strong>
+      </div>
+      <div class="row-summary total">
+        <span>TOTAL A PAGAR</span>
+        <h2>
+          {{
+            carritoService.montoTotal() | currency: "C$" : "symbol" : "1.2-2"
+          }}
+        </h2>
+      </div>
+      <ion-button
+        expand="block"
+        mode="ios"
+        class="btn-checkout"
+        (click)="irAlCheckout()"
+      >
+        CONFIRMAR PEDIDO
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-footer>
+}

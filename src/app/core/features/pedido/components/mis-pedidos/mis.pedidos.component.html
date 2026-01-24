@@ -1,0 +1,52 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cliente/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title mode="ios">Mis Pedidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarMisPedidos($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="main-wrapper ion-padding">
+    @if (isLoading()) {
+      <div class="ion-text-center ion-padding">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </div>
+    } @else {
+      <div class="orders-container">
+        @for (p of pedidos(); track p.idPedido) {
+          <div class="order-customer-card">
+            <div class="card-header">
+              <span class="order-number">Orden #{{ p.idPedido }}</span>
+              <ion-badge [color]="getBadgeColor(p.estado || '')" mode="ios">
+                {{ p.estado }}
+              </ion-badge>
+            </div>
+
+            <div class="card-body">
+              <div class="info-row">
+                <ion-icon name="time-outline"></ion-icon>
+                <span>{{ p.fechaRegistro | date:'dd MMM, h:mm a' }}</span>
+              </div>
+              <div class="total-row">
+                <span>Total pagado:</span>
+                <strong>{{ p.total | currency:'C$' }}</strong>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">
+            <ion-icon name="receipt-outline"></ion-icon>
+            <h3>Aún no tienes pedidos</h3>
+            <p>Tus órdenes aparecerán aquí para que puedas seguir su estado.</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</ion-content>

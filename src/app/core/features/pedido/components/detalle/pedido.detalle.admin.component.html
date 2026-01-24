@@ -1,0 +1,121 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/pedido" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Orden</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main-wrapper">
+    @if (isLoading()) {
+      <div class="loader-container ion-padding">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+        <p>Cargando ticket...</p>
+      </div>
+    } @else {
+      @if (pedido(); as p) {
+        <!-- Cabecera de Orden -->
+        <div class="order-header-box">
+          <div class="header-info">
+            <h1>ORDEN #{{ p.idPedido }}</h1>
+            <p>
+              <ion-icon name="time-outline"></ion-icon>
+              {{ p.fechaRegistro | date: "dd MMM, h:mm a" }}
+            </p>
+          </div>
+          <ion-badge [color]="getBadgeColor(p.estado!)" mode="ios">{{
+            p.estado
+          }}</ion-badge>
+        </div>
+
+        <div class="sections-container">
+          <!-- SECCIÓN: DATOS DE ENTREGA -->
+          <h6 class="section-title">Información de Entrega</h6>
+          <div class="info-card">
+            <ion-item lines="none">
+              <ion-icon
+                name="person-outline"
+                slot="start"
+                color="primary"
+              ></ion-icon>
+              <ion-label>
+                <h3>{{ p.nombreCliente }}</h3>
+                <p>Cliente</p>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon
+                name="location-outline"
+                slot="start"
+                color="primary"
+              ></ion-icon>
+              <ion-label class="ion-text-wrap">
+                <p>Dirección registrada:</p>
+                <h3>{{ p.direccionEnvio }}</h3>
+              </ion-label>
+            </ion-item>
+
+            <div
+              class="quick-actions ion-padding-horizontal ion-padding-bottom"
+            >
+              <ion-button
+                (click)="irAWhatsapp()"
+                class="btn-action whatsapp"
+                mode="ios"
+              >
+                <ion-icon name="logo-whatsapp" slot="start"></ion-icon> WhatsApp
+              </ion-button>
+              <ion-button
+                (click)="verEnMapa()"
+                class="btn-action maps"
+                mode="ios"
+              >
+                <ion-icon name="map-outline" slot="start"></ion-icon> Ver Mapa
+              </ion-button>
+            </div>
+          </div>
+
+          <!-- SECCIÓN: EL TICKET DE COMIDA -->
+          <h6 class="section-title">Detalle del Pedido</h6>
+          <div class="ticket-container">
+            <div class="ticket-header">
+              <span>Producto</span>
+              <span>Subtotal</span>
+            </div>
+
+            <div class="ticket-items">
+              @for (item of p.detalles; track item.idDetallePedido) {
+                <div class="ticket-row">
+                  <div class="item-desc">
+                    <span class="qty">{{ item.cantidad }}</span>
+                    <span class="name">{{ item.nombreProducto }}</span>
+                  </div>
+                  <span class="price">{{ item.subtotal | currency: "C$" : 'symbol' : '1.2-2' }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="ticket-divider"></div>
+
+            <div class="ticket-total">
+              <span>TOTAL A PAGAR</span>
+              <strong>{{ p.total | currency: "C$" : 'symbol' : '1.2-2' }}</strong>
+            </div>
+
+            <div class="payment-info">
+              <ion-icon name="cash-outline"></ion-icon>
+              <span>Método: <strong>Efectivo</strong></span>
+            </div>
+          </div>
+
+          <div class="info-footer">
+            <ion-icon name="receipt-outline"></ion-icon>
+            <span>Generado por Rivas Express Sistema</span>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</ion-content>

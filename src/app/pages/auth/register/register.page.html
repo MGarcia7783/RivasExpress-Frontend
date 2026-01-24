@@ -1,43 +1,143 @@
+<!-- Contenedor principal -->
 <ion-content class="register-page" fullscreen>
   <div class="register-container">
-    <div class="logo-circle">
-      <ion-icon name="person-circle" class="logo-icon" aria-hidden="true"></ion-icon>
+    <!-- Sección de logo y título -->
+    <div class="logo-section">
+      <div class="logo-circle">
+        <ion-icon
+          name="person-circle"
+          class="logo-icon"
+          aria-hidden="true"
+        ></ion-icon>
+      </div>
+
+      <h1>CREAR CUENTA</h1>
     </div>
 
-    <h1>CREAR CUENTA</h1>
+    <!-- Formulario -->
+    <form
+      [formGroup]="frmUsuarioRegistro"
+      (ngSubmit)="guardarRegistro()"
+      novalidate
+    >
+      <!-- Contenedor que controla ancho de inputs y botones -->
+      <div class="form-fileds">
+        <!-- Campo: nombre completo -->
+        <ion-item lines="none" class="custom-input-item">
+          <div slot="start" class="icon-wrapper">
+            <ion-icon name="person-circle"></ion-icon>
+          </div>
 
-    <form [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
-      <ion-item lines="none" class="custom-input-item">
-        <div class="icon-wrapper" slot="start">
-          <ion-icon name="person-circle" aria-hidden="true"></ion-icon>
+          <ion-input
+            type="text"
+            label="Nombre completo"
+            labelPlacement="floating"
+            autocapitalize="words"
+            formControlName="nombreCompleto"
+          >
+          </ion-input>
+        </ion-item>
+
+        <!-- Error nombre completo -->
+        @if (isInvalid('nombreCompleto')) {
+        <div class="error-text">
+          <small>Nombre obligatorio (3 a 60 caracteres).</small>
         </div>
-        <ion-input placeholder="Nombre completo" type="text" formControlName="fullName"></ion-input>
-      </ion-item>
+        }
 
-      <ion-item lines="none" class="custom-input-item">
-        <div class="icon-wrapper" slot="start">
-          <ion-icon name="mail" aria-hidden="true"></ion-icon>
+        <!-- Campo: teléfono -->
+        <ion-item lines="none" class="custom-input-item">
+          <div slot="start" class="icon-wrapper">
+            <ion-icon name="call"></ion-icon>
+          </div>
+          <ion-input
+            type="tel"
+            label=" Teléfono"
+            labelPlacement="floating"
+            formControlName="phoneNumber"
+          >
+          </ion-input>
+        </ion-item>
+
+        <!-- Error teléfono -->
+        @if (isInvalid('phoneNumber')) {
+        <div class="error-text">
+          <small>Ingrese un teléfono válido (mín. 8 dígitos).</small>
         </div>
-        <ion-input placeholder="Email" type="email" formControlName="email"></ion-input>
-      </ion-item>
+        }
 
-      <ion-item lines="none" class="custom-input-item">
-        <div class="icon-wrapper" slot="start">
-          <ion-icon name="lock-closed" aria-hidden="true"></ion-icon>
+        <!-- Campo: email -->
+        <ion-item lines="none" class="custom-input-item">
+          <div slot="start" class="icon-wrapper">
+            <ion-icon name="mail"></ion-icon>
+          </div>
+          <ion-input
+            id="register-email"
+            type="email"
+            label="Email"
+            labelPlacement="floating"
+            autocapitalize="off"
+            formControlName="userName"
+          >
+          </ion-input>
+        </ion-item>
+
+        <!-- Error email -->
+        @if (isInvalid('userName')) {
+        <div class="error-text">
+          <small>Email inválido (ejemplo@correo.com).</small>
         </div>
-        <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
-      </ion-item>
+        }
 
-      <ion-item lines="none" class="custom-input-item">
-        <div class="icon-wrapper" slot="start">
-          <ion-icon name="lock-closed" aria-hidden="true"></ion-icon>
-        </div>
-        <ion-input placeholder="Confirmar contraseña" type="password" formControlName="confirmPassword"></ion-input>
-      </ion-item>
+        <!-- Campo: contraseña -->
+        <ion-item lines="none" class="custom-input-item">
+          <div slot="start" class="icon-wrapper">
+            <ion-icon name="lock-closed"></ion-icon>
+          </div>
+          <ion-input
+            id="register-password"
+            [type]="passwordToggle ? 'text' : 'password'"
+            label="Contraseña"
+            labelPlacement="floating"
+            formControlName="password"
+          >
+            <!-- Botón de visibilidad -->
+            <ion-button
+              slot="end"
+              fill="clear"
+              (click)="passwordToggle = !passwordToggle"
+              class="eye-button"
+            >
+              <ion-icon
+                [name]="passwordToggle ? 'eye-off' : 'eye'"
+                slot="icon-only"
+              ></ion-icon>
+            </ion-button>
+          </ion-input>
+        </ion-item>
 
-      <ion-button expand="block" class="btn-primary" type="submit">Crear Cuenta</ion-button>
+        <!-- Error contraseña -->
+        @if (isInvalid('password')) {
+        <ion-text color="danger">
+          <div class="error-text">
+            <small>Mínimo 6 caracteres (Mayús., Minús., Núm. y Símbolo).</small>
+          </div>
+        </ion-text>
+        }
+
+        <!-- Botón crear cuenta-->
+        <ion-button
+          expand="block"
+          class="btn-primary"
+          type="submit"
+          [disabled]="frmUsuarioRegistro.invalid"
+        >
+          Crear Cuenta
+        </ion-button>
+      </div>
     </form>
 
+    <!-- Enlace a login -->
     <div class="signup">
       ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
     </div>

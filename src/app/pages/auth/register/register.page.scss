@@ -1,18 +1,29 @@
+/*Contenedor principal de la página*/
 ion-content.register-page {
-  --background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+  --background: #f8f9fc;
   height: 100%;
 
+  // Contenedor general
   .register-container {
     width: 100%;
-    max-width: 420px;
+    max-width: 550px;
     margin: 0 auto;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: start;
     padding: 60px 30px;
     box-sizing: border-box;
+  }
+
+  // Sección del logo y títutlo
+  .logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
   }
 
   .logo-circle {
@@ -36,130 +47,84 @@ ion-content.register-page {
     margin: 0 0 18px 0;
     font-size: 20px;
     font-weight: 700;
-    color: #111827;
+    color: #334155;
+    letter-spacing: -0.025em;
   }
 
-  .register-form {
-    width: 100%;
-  }
-
+  // Contenedor de inputs
   .custom-input-item {
     --background: #ffffff;
     --border-radius: 12px;
-    --padding-start: 10px;
-    border-radius: 12px;
+    --padding-start: 4px;
     margin-bottom: 14px;
     box-shadow: 0 6px 14px rgba(20, 40, 80, 0.06);
     align-items: center;
+
+    // Icono dentro del input
+    .icon-wrapper {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+      margin-right: 8px;
+      ion-icon {
+        color: #6b7280;
+        font-size: 25px;
+      }
+    }
+
+    // Botón del ojo
+    .eye-button {
+      --padding-start: 0;
+      --padding-end: 8px;
+      margin: 0;
+      height: 24px;
+      ion-icon {
+        font-size: 20px;
+        color: #6b7280;
+      }
+    }
   }
 
-  .custom-input-item .icon-wrapper {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
-    margin-right: 2px;
-  }
-
-  .custom-input-item .icon-wrapper ion-icon {
-    color: #6b7280;
-    font-size: 20px;
-  }
-
-  .custom-input-item ion-input {
-    --padding-start: 15px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-
-  /* Ensure placeholder is visible across browsers (Edge/Chromium) */
-  .custom-input-item ion-input::part(native) {
-    color: #111827; /* input text color */
-  }
-  .custom-input-item ion-input::part(native)::-webkit-input-placeholder {
-    color: #9ca3af;
-    opacity: 1;
-  }
-  .custom-input-item ion-input::part(native)::-moz-placeholder {
-    color: #9ca3af;
-    opacity: 1;
-  }
-  .custom-input-item ion-input::part(native):-ms-input-placeholder {
-    color: #9ca3af;
-    opacity: 1;
-  }
-  .custom-input-item ion-input::part(native)::placeholder {
-    color: #9ca3af;
-    opacity: 1;
-  }
-
+  // Botón
   .btn-primary {
     --background: #2b80ff;
-    --border-radius: 10px;
-    border-radius: 10px;
-    margin-top: 8px;
+    --border-radius: 12px;
+    margin-top: 15px;
     box-shadow: 0 10px 22px rgba(43, 128, 255, 0.22);
     color: #ffffff;
     height: 55px;
     font-weight: 600;
   }
 
-  /* UX: mostrar cursor pointer en elementos clickeables sin romper estilos nativos */
-  ion-button {
-    cursor: pointer;
-  }
-  ion-button::part(native) {
-    cursor: pointer;
-  }
-  .btn-primary {
-    cursor: pointer;
-  }
-  .signup a,
-  .signup .link-btn {
-    cursor: pointer;
-  }
-
+  // Signup
   .signup {
-    margin-top: 18px;
+    margin-top: 25px;
     color: #667085;
     font-size: 14px;
     text-align: center;
-  }
-  .signup a {
-    color: #1976d2;
-    font-weight: 600;
-    text-decoration: none;
+    a {
+      color: primary;
+      font-weight: 700;
+      cursor: pointer;
+    }
   }
 
-  .signup .link-btn {
-    color: #1976d2;
-    font-weight: 600;
-    text-decoration: none;
-    background: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    font: inherit;
-    cursor: pointer;
-  }
+  // Validación de error texto
+  .error-text {
+    color: #dc2626;
+    font-size: 12px;
+    margin: -8px 0 10px 14px;
 
-  @media (max-width: 420px) {
-    .logo-circle {
-      width: 80px;
-      height: 80px;
-    }
-    .logo-icon {
-      font-size: 34px;
-    }
-    h1 {
-      font-size: 18px;
+    small {
+      font-weight: 500;
     }
   }
 }
 
-ion-content.register-page .scroll-content {
+// Scroll content
+ion-content.login-page .scroll-content {
   display: flex;
 }

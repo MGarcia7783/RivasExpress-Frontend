@@ -10,68 +10,131 @@ import {
   providedIn: 'root',
 })
 export class InteractionService {
-  private loading: HTMLIonLoadingElement | null = null;
+  private loadingElement: HTMLIonLoadingElement | null = null;
 
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
   ) {}
 
-  async showLoading(message: string = 'Cargando...')
-  {
-    this.loading = await this.loadingCtrl.create({
+  // Cargando
+  async showLoading(message: string = 'Cargando...') {
+    this.loadingElement = await this.loadingCtrl.create({
       message,
-      backdropDismiss: true,
+      spinner: 'crescent',
+      duration: 10000,
+      cssClass: 'custom-loading',
+      translucent: true,
+      backdropDismiss: false,
     });
-    await this.loading.present();
+    await this.loadingElement.present();
   }
 
-  async dismissLoading()
-  {
-    if (this.loading) {
-      await this.loading.dismiss();
+  async dismissLoading() {
+    if (this.loadingElement) {
+      await this.loadingElement.dismiss();
     }
-    this.loading = null;
+    this.loadingElement = null;
   }
 
-  async showToast(message: string, duration: number = 4000, position: 'bottom' | 'top' | 'middle' = 'bottom')
-  {
+  // Toast
+  async showToast(
+    message: string,
+    color: 'success' | 'danger' | 'warning' | 'primary' = 'primary',
+    icon: string = 'information-circle-outline',
+    duration: number = 2000,
+  ) {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      position,
-      color: 'dark',
+      position: 'bottom',
+      icon,
+      cssClass: `modern-toast ${color}-toast`, // Clase dinámica
+      mode: 'ios',
+      swipeGesture: 'vertical',
     });
     await toast.present();
   }
 
-  async presentAlert(header: string, message: string, textCANCEL: string | null = null, textOK: string = 'OK'): Promise<boolean>
-  {
-    return new Promise(async (resolve) => {
-      let buttons = [];
-      if (textCANCEL) {
-        buttons.push({
-          text: textCANCEL,
-          role: 'cancel',
-          handler: () => {
-            resolve(false);
-          },
-        });
-      }
-      buttons.push({text: textOK, handler: async () =>
-        {
-          resolve(true);
+  // Alerta
+  async presentAlert(
+    header: string,
+    message: string,
+    textCANCEL: string | null = null,
+    textOK: string = 'OK',
+    isDestructive: boolean = false,
+    tipoMensaje: 'info' | 'success' | 'warning' | 'danger' = 'info',
+  ): Promise<boolean> {
+    let result = false;
+    const buttons: any[] = [];
+
+    if (textCANCEL) {
+      buttons.push({
+        text: textCANCEL,
+        role: 'cancel',
+        cssClass: 'alert-button-cancel',
+        handler: () => {
+          result = false;
         },
       });
-      const alert = await this.alertController.create({
-        header,
-        message: new IonicSafeString(message).value,
-        // message,
-        buttons,
-        backdropDismiss: false,
-      });
-      await alert.present();
+    }
+
+    buttons.push({
+      text: textOK,
+      cssClass: isDestructive
+        ? 'alert-button-confirm-delete'
+        : 'alert-button-confirm',
+      handler: () => {
+        result = true;
+      },
     });
+
+    // Mapeo de clase según tipo de mensaje
+    const tipoClase =
+      {
+        info: 'alert-info',
+        success: 'alert-success',
+        warning: 'alert-warning',
+        danger: 'alert-danger',
+      }[tipoMensaje] || 'alert-info';
+
+    const alert = await this.alertController.create({
+      header,
+      message: new IonicSafeString(message).value,
+      buttons,
+      mode: 'ios',
+      backdropDismiss: false,
+      cssClass: 'custom-alert',
+    });
+
+    await alert.present();
+
+    await alert.onDidDismiss();
+    return result;
+  }
+
+  // Input activo
+  blurActiveElement() {
+    const active = document.activeElement as HTMLElement | null;
+    active?.blur();
+  }
+
+  // Manejar errores
+  async mostrarError(err: any) {
+    const backendMessage =
+      err?.error?.detail ||
+      err?.error?.message ||
+      err?.error?.title ||
+      err?.message;
+
+    await this.presentAlert(
+      'Error',
+      backendMessage || 'Ocurrió un problema al procesar la solicitud.',
+      null,
+      'Cerrar',
+      false,
+      'danger',
+    );
   }
 }

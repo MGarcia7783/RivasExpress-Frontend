@@ -4,10 +4,8 @@ import { Capacitor } from '@capacitor/core';
 export function getApiUrl(): string {
 
   if (Capacitor.isNativePlatform()) {
-    // URL para dispositivos móviles/emuladores
-    return 'http://10.0.2.2:5279/api';
+    return 'http://10.0.2.2:5279/api';      // URL para dispositivos móviles/emuladores
   }
 
-  // URL para web (navegadores)
-  return environment.API_URL;
+  return environment.API_URL; // URL para web (navegadores)
 }

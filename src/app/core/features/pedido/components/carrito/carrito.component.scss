@@ -1,0 +1,201 @@
+:host ::ng-deep {
+  ion-content {
+    --background: #f8f9fc;
+  }
+
+  .main-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cart-item-card {
+    background: white;
+    border-radius: 24px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+
+    // --- FILA SUPERIOR ---
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; // Centrado para que el nombre y precio grande se alineen
+      margin-bottom: 0;
+
+      .product-name {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1e293b;
+        flex: 1;
+        padding-right: 12px;
+        line-height: 1.2;
+      }
+
+      .item-subtotal {
+        font-size: 1.35rem; // PRECIO MÁS GRANDE
+        font-weight: 900; // PESO MÁXIMO
+        color: var(--ion-color-primary); // Azul de la app
+        white-space: nowrap;
+        letter-spacing: -0.5px;
+      }
+    }
+
+    // --- FILA INFERIOR ---
+    .card-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid #f8fafc;
+
+      .unit-info {
+        display: flex;
+        flex-direction: column;
+        .label {
+          font-size: 0.7rem;
+          color: #94a3b8;
+          text-transform: uppercase;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          margin-bottom: 5px;
+        }
+        .value {
+          font-size: 1rem;
+          color: #64748b;
+          font-weight: 600;
+        }
+      }
+
+      .actions-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+    }
+
+    // Controles de cantidad
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 14px;
+      padding: 3px 6px;
+
+      ion-button {
+        --color: var(--ion-color-primary);
+        height: 32px;
+        width: 32px;
+        margin: 0;
+      }
+
+      .qty-label {
+        font-weight: 800;
+        font-size: 1.1rem; // Cantidad más legible
+        color: #1e293b;
+        min-width: 28px;
+        text-align: center;
+      }
+    }
+
+    .btn-delete {
+      margin: 0;
+      --color: #ef4444;
+      --padding-start: 4px;
+      --padding-end: 4px;
+      ion-icon {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  /* --- FOOTER RESUMEN --- */
+  .footer-summary {
+    .summary-card {
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      border-radius: 30px 30px 0 0;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.08);
+
+      .row-summary {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        span {
+          color: #64748b;
+          font-weight: 600;
+          font-size: 0.95rem;
+        }
+        strong {
+          color: #1e293b;
+          font-size: 1rem;
+        }
+
+        &.total {
+          margin-top: 12px;
+          margin-bottom: 20px;
+          span {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #1e293b;
+          }
+          h2 {
+            margin: 0;
+            color: var(--ion-color-primary);
+            font-weight: 900;
+            font-size: 2rem; // TOTAL GIGANTE
+            letter-spacing: -1px;
+          }
+        }
+      }
+
+      .btn-checkout {
+        --border-radius: 18px;
+        height: 60px;
+        font-weight: 800;
+        font-size: 1.1rem;
+        --box-shadow: 0 10px 20px rgba(var(--ion-color-primary-rgb), 0.3);
+      }
+    }
+  }
+
+  /* --- ESTADO VACÍO --- */
+  .empty-cart-state {
+    text-align: center;
+    padding: 80px 40px;
+    color: #94a3b8;
+    .icon-circle {
+      width: 100px;
+      height: 100px;
+      background: #eef2ff;
+      border-radius: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      ion-icon {
+        font-size: 4rem;
+        color: var(--ion-color-primary);
+        opacity: 0.5;
+      }
+    }
+    h2 {
+      font-weight: 800;
+      color: #334155;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+    p {
+      margin-bottom: 35px;
+      font-size: 1rem;
+    }
+    .btn-continue {
+      height: 54px;
+      font-weight: 700;
+      --border-radius: 16px;
+    }
+  }
+}

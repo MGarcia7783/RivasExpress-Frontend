@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/categoria"></ion-back-button>
+    </ion-buttons>
+    <!-- Título -->
+    <ion-title> Categoría</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="register-page" fullscreen>
+  <div class="register-container">
+    <!-- Círculo de logo con icono de categorías -->
+    <div class="logo-circle">
+      <ion-icon name="restaurant-outline" class="logo-icon"></ion-icon>
+    </div>
+
+    <!-- Título dinámico -->
+    <h1>{{ fr["id"]?.value ? "ACTUALIZAR" : "REGISTRAR" }} CATEGORÍA</h1>
+
+    <!-- Formulario -->
+    <form
+      [formGroup]="frmCategoriaRegistro"
+      (ngSubmit)="guardarRegistro()"
+      novalidate
+    >
+      <!-- Nombre de Categoría (Sin icono start) -->
+      <ion-item lines="none" class="custom-input-item">
+        <ion-input
+          type="text"
+          label="Nombre de categoría"
+          labelPlacement="floating"
+          formControlName="nombreCategoria"
+        >
+        </ion-input>
+      </ion-item>
+
+      @if (isInvalid("nombreCategoria")) {
+        <div class="error-text">
+          <small>El nombre es obligatorio (mínimo 5 caracteres).</small>
+        </div>
+      }
+
+      <!-- Descripción -->
+      <ion-item lines="none" class="custom-input-item">
+        <ion-textarea
+          label="Descripción"
+          labelPlacement="floating"
+          formControlName="descripcionCategoria"
+          [autoGrow]="true"
+          rows="3"
+        >
+        </ion-textarea>
+      </ion-item>
+
+      @if (isInvalid("descripcionCategoria")) {
+        <div class="error-text">
+          <small>La descripción es obligatoria (mínimo 10 caracteres).</small>
+        </div>
+      }
+
+      <!-- Botón -->
+      <ion-button
+        expand="block"
+        class="btn-primary"
+        type="submit"
+        [disabled]="frmCategoriaRegistro.invalid"
+      >
+        {{ fr["id"]?.value ? "Actualizar" : "Guardar" }} Categoría
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

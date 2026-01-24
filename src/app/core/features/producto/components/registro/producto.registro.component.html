@@ -1,0 +1,138 @@
+<!-- Header -->
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/producto"></ion-back-button>
+    </ion-buttons>
+    <!-- Título -->
+    <ion-title> Producto </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="register-page" fullscreen>
+  <div class="register-container">
+    <!-- Sección de la imagen -->
+    <!-- Input oculto solo para web -->
+    <input
+      type="file"
+      accept="image/*"
+      hidden
+      #fileInput
+      (change)="onFileSelected($event)"
+    />
+
+    <!-- Contenedor cliekeable (web y móvil) -->
+    <div class="image-picker-wrapper" (click)="onSelectImage(fileInput)">
+      @if (imagePreview()) {
+        <!-- preview cuando no hay imagen -->
+        <img [src]="imagePreview()" class="img-preview" />
+        <div class="edit-badge">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+      } @else {
+        <!-- Placeholder cuando no hay imagen -->
+        <div class="logo-circle">
+          <ion-icon name="cloud-upload-outline" class="logo-icon"></ion-icon>
+          <p>Subir Foto</p>
+        </div>
+      }
+    </div>
+
+    <!-- Título dinámico -->
+    <h1>{{ fr["id"]?.value ? "ACTUALIZAR" : "REGISTRAR" }} PRODUCTO</h1>
+
+    <!-- Formulario -->
+    <form
+      [formGroup]="frmProductoRegistro"
+      (ngSubmit)="guardarRegistro()"
+      novalidate
+    >
+      <!-- Nombre del producto -->
+      <ion-item lines="none" class="custom-input-item">
+        <ion-input
+          type="text"
+          label="Nombre del producto"
+          labelPlacement="floating"
+          formControlName="nombreProducto"
+        ></ion-input>
+      </ion-item>
+      @if (isInvalid("nombreProducto")) {
+        <div class="error-text">
+          <small>Nombre obligatorio (mín. 5 carac.).</small>
+        </div>
+      }
+
+      <!-- Categoría del producto -->
+      <ion-item lines="none" class="custom-input-item">
+        <ion-select
+          label="Categoría"
+          labelPlacement="floating"
+          formControlName="idCategoria"
+          placeholder="Selecciona una"
+        >
+          @for (cat of categorias(); track cat.idCategoria) {
+            <ion-select-option [value]="cat.idCategoria">{{
+              cat.nombreCategoria
+            }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <!-- Precio -->
+      <ion-item lines="none" class="custom-input-item">
+        <ion-input
+          type="number"
+          inputmode="decimal"
+          label="Precio venta"
+          labelPlacement="floating"
+          formControlName="precio"
+        ></ion-input>
+      </ion-item>
+
+      @if (isInvalid("precio")) {
+        <div class="error-text">
+          <small>Precio válido mayor a 0 (máx. 2 decimales)</small>
+        </div>
+      }
+
+      <!-- Descripción -->
+      <ion-item lines="none" class="custom-input-item">
+        <ion-textarea
+          label="Descripción corta"
+          labelPlacement="floating"
+          formControlName="descripcionProducto"
+          [autoGrow]="true"
+          rows="2"
+        ></ion-textarea>
+      </ion-item>
+
+      @if (isInvalid("descripcionProducto")) {
+        <div class="error-text">
+          <small>La descripción es obligatoria (mínimo 10 caracteres).</small>
+        </div>
+      }
+
+      <!-- Disponible -->
+      <ion-item lines="none" class="custom-input-item toggle-item">
+        <ion-label>¿Disponible para venta?</ion-label>
+        <ion-toggle formControlName="disponible" color="success"></ion-toggle>
+      </ion-item>
+
+      <!-- Combo -->
+      <ion-item lines="none" class="custom-input-item toggle-item">
+        <ion-label>¿Es un combo?</ion-label>
+        <ion-toggle formControlName="esCombo" color="warning"></ion-toggle>
+      </ion-item>
+
+      <!-- Botón -->
+      <ion-button
+        expand="block"
+        class="btn-primary"
+        type="submit"
+        [disabled]="frmProductoRegistro.invalid"
+      >
+        {{ fr["id"]?.value ? "Actualizar" : "Guardar" }} Producto
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
