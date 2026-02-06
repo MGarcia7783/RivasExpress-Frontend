@@ -15,20 +15,22 @@ import {
   IonList,
   IonLabel,
   IonButton,
-} from '@ionic/angular/standalone';
+  IonFab,
+  IonFabButton, IonSpinner } from '@ionic/angular/standalone';
 import { UsuarioService } from '../../services/usuario.service';
 import { InteractionService } from 'src/app/shared/interaction.service';
 import { Router } from '@angular/router';
+import { IUsuario } from '../../interface/iusuario';
 
 @Component({
   selector: 'app-usuario.listado',
   templateUrl: './usuario.listado.component.html',
   styleUrls: ['./usuario.listado.component.scss'],
-  imports: [
+  imports: [IonSpinner,
+    IonFabButton,
+    IonFab,
     IonButton,
     IonList,
-    IonSkeletonText,
-    IonRefresherContent,
     IonRefresher,
     IonIcon,
     IonContent,
@@ -68,7 +70,7 @@ export class UsuarioListadoComponent {
     this.usuarioService
       .cargarUsuarios(this.paginaActual(), this.pageSize, this.filtro())
       .subscribe({
-        next: (usuarios) => {
+        next: async (usuarios) => {
           this.isLoading.set(false);
           event?.target.complete();
 
@@ -109,13 +111,14 @@ export class UsuarioListadoComponent {
   // Filtrar usuarios
   usuariosFiltrados = computed(() => {
     const term = this.filtro().toLowerCase().trim();
-    return this.usuarios().filter(
-      (u) =>
-        u.nombreCompleto.toLowerCase().includes(term) ||
-        u.userName?.toLowerCase().includes(term) ||
-        u.phoneNumber?.toLocaleLowerCase().includes(term),
-    )
-    .sort((a, b) => b.totalPedidos - a.totalPedidos);
+    return this.usuarios()
+      .filter(
+        (u) =>
+          u.nombreCompleto.toLowerCase().includes(term) ||
+          u.userName?.toLowerCase().includes(term) ||
+          u.phoneNumber?.toLocaleLowerCase().includes(term),
+      )
+      .sort((a, b) => b.totalPedidos - a.totalPedidos);
   });
 
   // Actualiza el valor del filtro al escribir en el input
@@ -126,6 +129,16 @@ export class UsuarioListadoComponent {
   }
 
   verDetalle(id: string) {
-    this.router.navigate(['/admin/usuario', id]);
+    this.router.navigate(['/home/admin/usuario/detalle', id]);
   }
+
+  // Abrir formulario
+    abrirFormulario(usuario?: IUsuario) {
+      this.interaction.blurActiveElement();
+      this.router.navigate(
+        usuario
+          ? ['/home/admin/usuario/registro', usuario.id]
+          : ['/home/admin/usuario/registro'],
+      );
+    }
 }

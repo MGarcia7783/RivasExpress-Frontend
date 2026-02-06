@@ -91,19 +91,6 @@ export class PedidoDetalleAdminComponent implements OnInit {
     window.open(`https://wa.me/${tel}?text=${msg}`, '_system');
   }
 
-  // Ver ubicación del pedido
-  async verEnMapa() {
-    const p = this.pedido();
-    if (!p?.latitud || !p?.longitud) {
-      await this.interaction.showToast('Ubicación no disponible', 'warning');
-      return;
-    }
-
-    // Abrir Google Maps
-    const urlMap = `https://www.google.com/maps/search/?api=1&query=${p.latitud},${p.longitud}`;
-    window.open(urlMap, '_system');
-  }
-
   // Badge
   getBadgeColor(estado: string) {
     return (

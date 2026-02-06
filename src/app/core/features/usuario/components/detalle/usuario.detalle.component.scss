@@ -1,260 +1,281 @@
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
 ion-content {
-  --background: #f8f9fc;
-}
-
-// Wrapper para adaptabilidad Web
-.main-wrapper {
-  max-width: 600px;
-  margin: 0 auto;
+  --background: var(--bg-app);
   width: 100%;
+  overflow-x: hidden;
 }
 
-// Cabecera más curva
+/* =========================================================
+   CABECERA DEL PERFIL
+========================================================= */
 .profile-header {
-  background: linear-gradient(
-    135deg,
-    var(--ion-color-primary) 0%,
-    #1a56db 100%
-  );
-  padding: 15px 20px 50px; // Reducido el padding superior e inferior
+  background: var(--color-primary);
+  padding: 15px 20px 50px;
   text-align: center;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
-  color: white;
-
-  .avatar-container {
-    width: 85px;
-    height: 85px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    border-radius: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 10px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-
-    ion-icon {
-      font-size: 3.5rem;
-    }
-  }
-
-  .profile-info {
-    h2 {
-      margin: 0;
-      font-weight: 700;
-      font-size: 1.4rem;
-    }
-    p {
-      margin: 2px 0 0;
-      opacity: 0.9;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-  }
+  color: var(--color-white);
 }
 
-// Métricas solapadas
+/* Avatar */
+.avatar-container {
+  width: 85px;
+  height: 85px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.avatar-container ion-icon {
+  font-size: 3.5rem;
+}
+
+/* Información del perfil */
+.profile-info h2 {
+  margin: 0 0 4px 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.profile-info p {
+  margin: 2px 0 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* =========================================================
+   MÉTRICAS
+========================================================= */
 .stats-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   padding: 0 20px;
   margin-top: -30px;
-
-  .stat-card {
-    background: white;
-    padding: 18px 10px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-
-    .stat-value {
-      display: block;
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #1e293b;
-    }
-
-    .stat-label {
-      font-size: 0.7rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-  }
 }
 
-// Secciones inferiores
+.stat-card {
+  background: var(--color-white);
+  padding: 18px 10px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* =========================================================
+   SECCIONES
+========================================================= */
 .sections-container {
   padding: 15px 20px;
-
-  .section-title {
-    font-weight: 700;
-    color: #475569;
-    margin: 20px 0 12px 5px;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
 }
 
-// Botón de contacto
+.section-title {
+  font-weight: 700;
+  color: #475569;
+  margin: 20px 0 12px 5px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   BOTONES DE CONTACTO
+========================================================= */
 .quick-contact {
   display: flex;
   gap: 12px;
-
-  .btn-contact {
-    flex: 1;
-    height: 52px;
-    margin: 0;
-    --border-radius: 14px;
-    --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
-    font-weight: 700;
-    font-size: 0.9rem;
-
-    &.whatsapp {
-      --background: #25d366;
-      --color: white;
-    }
-  }
 }
 
-// Tarjeta de Seguridad
+.btn-contact {
+  flex: 1;
+  height: 52px;
+  margin: 0;
+  --border-radius: 14px;
+  --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.btn-contact.whatsapp {
+  --background: #25d366;
+  --color: var(--color-white);
+}
+
+/* =========================================================
+   TARJETA DE CONFIGURACIÓN / SEGURIDAD
+========================================================= */
 .settings-card {
-  background: white;
-  border-radius: 20px;
+  background: var(--color-white);
+  border-radius: 18px;
   padding: 5px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
   border: 1px solid #f1f5f9;
-
-  ion-item {
-    --background: transparent;
-    --padding-start: 10px;
-
-    ion-label {
-      h2 {
-        font-weight: 700;
-        color: #1e293b;
-        font-size: 1rem;
-        transition: color 0.3s ease; // Transición suave al cambiar de color
-
-        &.text-danger {
-          color: var(--ion-color-danger) !important;
-        }
-      }
-      p {
-        font-size: 0.8rem;
-        color: #64748b;
-      }
-    }
-  }
-
-  .icon-circle-status {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: #fee2e2;
-    color: #ef4444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 12px;
-    transition: 0.3s ease;
-
-    &.active {
-      background: #dcfce7; // Verde suave si está activo
-      color: #22c55e;
-    }
-
-    ion-icon {
-      font-size: 1.2rem;
-    }
-  }
 }
 
-// Sección de pedidos
+.settings-card ion-item {
+  --background: transparent;
+  --padding-start: 10px;
+}
+
+.settings-card ion-item ion-label h2 {
+  font-weight: 700;
+  color: var(--text-title);
+  font-size: 1rem;
+  margin: 0 0 4px 0;
+}
+
+.settings-card ion-item ion-label h2.text-danger {
+  color: var(--ion-color-danger) !important;
+}
+
+.settings-card ion-item ion-label p {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 3px 0 0;
+}
+
+/* Estado / Iconos */
+.icon-circle-status {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  transition: 0.3s ease;
+}
+
+.icon-circle-status.active {
+  background: #dcfce7;
+  color: #22c55e;
+}
+
+.icon-circle-status ion-icon {
+  font-size: 1.2rem;
+}
+
+/* =========================================================
+   LISTA DE PEDIDOS
+========================================================= */
 .orders-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  .order-item-card {
-    background: white;
-    border-radius: 18px;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-    cursor: pointer;
-    transition: transform 0.2s;
-
-    &:active {
-      transform: scale(0.98);
-    }
-
-    .order-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 12px;
-      background: #f1f5f9;
-      color: #64748b;
-
-      &.entregado {
-        background: #dcfce7;
-        color: #16a34a;
-      }
-      &.pendiente {
-        background: #fef9c3;
-        color: #ca8a04;
-      }
-      &.cancelado {
-        background: #fee2e2;
-        color: #dc2626;
-      }
-    }
-
-    .order-info {
-      flex: 1;
-      .order-header {
-        display: flex;
-        justify-content: space-between;
-        .order-id {
-          font-weight: 700;
-          color: #1e293b;
-          font-size: 0.95rem;
-        }
-        .order-date {
-          font-size: 0.75rem;
-          color: #94a3b8;
-        }
-      }
-      .order-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 4px;
-        .order-total {
-          font-weight: 800;
-          color: var(--ion-color-primary);
-          font-size: 0.9rem;
-        }
-        ion-badge {
-          font-size: 0.6rem;
-          --padding-start: 6px;
-          --padding-end: 6px;
-        }
-      }
-    }
-  }
 }
 
+.order-item-card {
+  background: var(--color-white);
+  border-radius: 18px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.order-item-card:active {
+  transform: scale(0.98);
+}
+
+/* Icono de pedido */
+.order-item-card .order-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.order-icon.entregado {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.order-icon.pendiente {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.order-icon.cancelado {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Información del pedido */
+.order-info {
+  flex: 1;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-id {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.order-date {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.order-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.order-total {
+  font-weight: 800;
+  color: var(--ion-color-primary);
+  font-size: 0.9rem;
+}
+
+.order-item-card ion-badge {
+  font-size: 0.6rem;
+  --padding-start: 6px;
+  --padding-end: 6px;
+}
+
+/* =========================================================
+   ESTADO VACÍO
+========================================================= */
 .empty-orders {
   text-align: center;
   padding: 30px 20px;
@@ -262,24 +283,17 @@ ion-content {
   border: 1px dashed #cbd5e1;
   border-radius: 20px;
   color: #94a3b8;
-  ion-icon {
-    font-size: 2.5rem;
-    margin-bottom: 8px;
-    opacity: 0.5;
-  }
-  p {
-    margin: 0;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
 }
 
-// Ajustes Web
-@media (min-width: 768px) {
-  .main-wrapper {
-    margin-top: 20px;
-  }
-  .profile-header {
-    border-radius: 40px;
-  }
+.empty-orders ion-icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  opacity: 0.5;
 }
+
+.empty-orders p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+

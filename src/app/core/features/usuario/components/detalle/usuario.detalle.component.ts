@@ -31,7 +31,6 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
     IonButtons,
     IonToolbar,
     IonHeader,
-    IonSpinner,
     IonLabel,
     IonToggle,
     IonItem,
@@ -40,7 +39,8 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
     IonContent,
     DatePipe,
     CurrencyPipe,
-  ],
+    IonSpinner
+],
 })
 export class UsuarioDetalleComponent implements OnInit {
   // Inyección de depencias
@@ -62,13 +62,14 @@ export class UsuarioDetalleComponent implements OnInit {
   // Cargar usuario
   async cargarUsuario(id: string) {
     this.isLoading.set(true);
+
     this.usuarioService.obtenerPorId(id).subscribe({
-      next: (res: IUsuario | null) => {
+      next: async (res: IUsuario | null) => {
         this.user.set(res);
         this.isLoading.set(false);
       },
-      error: () => {
-        this.interaction.showToast('No se pudo cargar el perfil', 'danger');
+      error: async () => {
+        await this.interaction.showToast('No se pudo cargar el perfil', 'danger');
         this.router.navigate(['/admin/usuario']);
       },
     });

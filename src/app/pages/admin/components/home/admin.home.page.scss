@@ -1,0 +1,159 @@
+/* =====================================================
+   Fondo general
+   ===================================================== */
+
+ion-header {
+  margin-bottom: -20px;
+}
+
+ion-toolbar {
+  --background: var(--color-primary);
+  --color: var(--color-white);
+}
+
+ion-content {
+  --background: var(--bg-app);
+}
+
+/* =====================================================
+   Botón de logout en toolbar
+   ===================================================== */
+.custom-logout-btn {
+  --background: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-logout-btn ion-icon {
+  font-size: 1.5rem;
+  color: var(--color-white);
+}
+
+.custom-logout-btn:active {
+  --color: var(--color-white);
+}
+
+/* =====================================================
+   Header del dashboard
+   ===================================================== */
+.dashboard-header {
+  background: var(--color-primary);
+  min-height: 10vh;
+  border-radius: 0 0 40px 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 40px;
+}
+
+/* Mensaje de bienvenida */
+.welcome-msg h1 {
+  color: var(--color-white);
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+}
+
+.welcome-msg h1 span {
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.welcome-msg p {
+  color: var(--color-white);
+  margin: 0;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+}
+
+/* =====================================================
+   Contenedor general
+   ===================================================== */
+.container {
+  padding: 20px 10px;
+}
+
+/* =====================================================
+   Tarjetas del menú
+   ===================================================== */
+.menu-card {
+  background: var(--color-white);
+  border-radius: 28px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  width: 100%;
+  max-width: 250px;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.menu-card:active {
+  transform: scale(0.94);
+  background: #f9f9f9;
+}
+
+/* =====================================================
+   Badge de la tarjeta
+   ===================================================== */
+.custom-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #ff4d4d;
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(255, 77, 77, 0.3);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+/*.custom-badge.badge-zero {*/
+.badge-zero {
+  background: #cbd5e1;
+  box-shadow: none;
+  color: #475569;
+}
+
+/* =====================================================
+   Icono de la tarjeta
+   ===================================================== */
+.menu-card .icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.menu-card .icon-box ion-icon {
+  font-size: 2rem;
+}
+
+/* =====================================================
+   Información de la tarjeta
+   ===================================================== */
+.menu-card .card-info h3 {
+  font-family: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-title);
+}
+
+.menu-card .card-info p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 4px 0 0;
+  font-weight: 400;
+}

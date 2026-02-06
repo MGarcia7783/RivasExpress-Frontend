@@ -1,14 +1,21 @@
 <ion-header class="ion-no-border">
   <!-- Barra superior -->
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/admin/home" text=""></ion-back-button>
+      <ion-back-button
+        defaultHref="/home/admin/dashboard"
+        text=""
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title>Productos</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Productos</span></h1>
+      </div>
+    </ion-title>
   </ion-toolbar>
 
   <!-- Barra de búsqueda -->
-  <ion-toolbar color="primary">
+  <ion-toolbar class="search-toolbar">
     <ion-searchbar
       mode="ios"
       placeholder="Buscar producto..."
@@ -23,35 +30,14 @@
 <ion-content>
   <!-- Pull to Refresh -->
   <ion-refresher slot="fixed" (ionRefresh)="cargarProductos($event)">
-    <ion-refresher-content
-      pullingIcon="refresh-outline"
-      refreshingSpinner="crescent"
-    >
-    </ion-refresher-content>
   </ion-refresher>
 
   <!-- Contenedor principal -->
-  <div class="list-container ion-padding">
+  <div class="list-container">
     @if (isLoading()) {
-      <!-- Skeleton Screen (estado cargando) -->
-      @for (i of [1, 2, 3, 4, 5, 6]; track i) {
-        <div class="custom-card-item skeleton-mode">
-          <ion-skeleton-text
-            [animated]="true"
-            class="skeleton-icon"
-          ></ion-skeleton-text>
-          <div class="info-label">
-            <ion-skeleton-text
-              [animated]="true"
-              style="width: 70%; height: 18px"
-            ></ion-skeleton-text>
-            <ion-skeleton-text
-              [animated]="true"
-              style="width: 40%; height: 14px"
-            ></ion-skeleton-text>
-          </div>
-        </div>
-      }
+      <div class="loader-container">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </div>
     } @else {
       <!-- Lista de productos -->
       <ion-list lines="none">
@@ -79,7 +65,7 @@
               <p>{{ item.descripcionProducto || "Sin descripción" }}</p>
               <!-- Etiqueta de precio elegante -->
               <div class="price-tag">
-                {{ item.precio | currency: "C$" : 'symbol' : '1.2-2' }}
+                {{ item.precio | currency: "C$" : "symbol" : "1.2-2" }}
                 @if (!item.disponible) {
                   <span class="status-out">Agotado</span>
                 }
@@ -109,34 +95,38 @@
           </div>
         }
       </ion-list>
-    }
-    <!-- Paginación -->
-    <div class="pagination-container">
-      <div class="pagination-buttons">
-        <!-- Botón anterior -->
-        <ion-button
-          fill="outline"
-          size="small"
-          (click)="prevPage()"
-          [disabled]="paginaActual() === 1"
-        >
-          <ion-icon name="chevron-back-outline"></ion-icon>Anterior
-        </ion-button>
 
-        <!-- Botón anterior -->
-        <ion-button
-          fill="outline"
-          size="small"
-          (click)="nextPage()"
-          [disabled]="paginaActual() === totalPaginas()"
-          >Siguiente
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </div>
-      <div class="page-info">
-        Página {{ paginaActual() }} de {{ totalPaginas() }}
-      </div>
-    </div>
+      <!-- Paginación -->
+      @if (totalPaginas() > 1) {
+        <div class="pagination-container">
+          <div class="pagination-btns">
+            <ion-button
+              fill="clear"
+              (click)="prevPage()"
+              [disabled]="paginaActual() === 1"
+            >
+              <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+            <div class="page-dot active"></div>
+            <ion-button
+              fill="clear"
+              (click)="nextPage()"
+              [disabled]="paginaActual() === totalPaginas()"
+            >
+              <ion-icon
+                name="chevron-forward-outline"
+                slot="icon-only"
+              ></ion-icon>
+            </ion-button>
+          </div>
+
+          <div class="page-indicator">
+            Página <strong>{{ paginaActual() }}</strong> de
+            <strong>{{ totalPaginas() }}</strong>
+          </div>
+        </div>
+      }
+    }
   </div>
 
   <!-- Fab -->

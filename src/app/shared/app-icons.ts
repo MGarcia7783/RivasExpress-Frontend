@@ -2,6 +2,7 @@ import {
   add,
   addCircleOutline,
   alertCircleOutline,
+  arrowBackOutline,
   arrowForwardOutline,
   bagHandleOutline,
   basketOutline,
@@ -12,7 +13,6 @@ import {
   cameraOutline,
   carOutline,
   cart,
-  cartOutline,
   cashOutline,
   checkmarkCircleOutline,
   checkmarkDoneCircle,
@@ -51,7 +51,6 @@ import {
   saveOutline,
   search,
   searchCircle,
-  searchOutline,
   settingsOutline,
   shieldCheckmarkOutline,
   statsChartOutline,
@@ -98,6 +97,7 @@ export const APP_ICONS = {
   add: add,
   'save-outline': saveOutline,
   'document-text-outline': documentTextOutline,
+  'arrow-back-outline':arrowBackOutline,
 
   // Productos
   'fast-food-outline': fastFoodOutline,

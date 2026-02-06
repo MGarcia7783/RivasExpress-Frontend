@@ -1,15 +1,18 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/cliente/carrito" text=""></ion-back-button>
+      <ion-back-button defaultHref="/home/cliente/carrito" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title mode="ios">Confirmar Pedido</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Confirmar Pedido</span></h1>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="register-page">
   <div class="register-container ion-padding">
-
     <!-- 1. RESUMEN DEL PEDIDO (Estilo Ticket) -->
     <div class="logo-section">
       <div class="logo-circle">
@@ -22,8 +25,12 @@
       <div class="items-list">
         @for (item of carritoService.itemsLista(); track item.idProducto) {
           <div class="summary-row">
-            <span class="qty-name">{{ item.cantidad }}x {{ item.nombreProducto }}</span>
-            <span class="price">{{ (item.precioUnitario * item.cantidad) | currency:'C$' }}</span>
+            <span class="qty-name"
+              >{{ item.cantidad }} {{ item.nombreProducto }}</span
+            >
+            <span class="price">{{
+              item.precioUnitario * item.cantidad | currency: "C$"
+            }}</span>
           </div>
         }
       </div>
@@ -32,36 +39,43 @@
 
       <div class="total-row">
         <span>Total a Pagar:</span>
-        <strong>{{ carritoService.montoTotal() | currency:'C$' }}</strong>
+        <strong>{{ carritoService.montoTotal() | currency: "C$" }}</strong>
       </div>
     </div>
 
     <!-- 2. FORMULARIO DE ENTREGA -->
     <form [formGroup]="frmCheckout" (ngSubmit)="enviarPedido()" novalidate>
-
       <h6 class="section-label">Datos de contacto</h6>
       <ion-item lines="none" class="custom-input-item">
         <ion-input
+          type="text"
           label="Nombre que recibe"
           labelPlacement="floating"
           formControlName="nombreCliente"
-          type="text">
+        >
         </ion-input>
       </ion-item>
-      @if (isInvalid('nombreCliente')) {
-        <ion-text color="danger"><small>Nombre obligatorio.</small></ion-text>
+
+      @if (isInvalid("nombreCliente")) {
+        <div class="error-text">
+          <small>Nombre obligatorio.</small>
+        </div>
       }
 
       <ion-item lines="none" class="custom-input-item">
         <ion-input
+          type="tel"
           label="Teléfono de contacto"
           labelPlacement="floating"
           formControlName="telefono"
-          type="tel">
+        >
         </ion-input>
       </ion-item>
-      @if (isInvalid('telefono')) {
-        <ion-text color="danger"><small>Teléfono inválido.</small></ion-text>
+
+      @if (isInvalid("telefono")) {
+        <div class="error-text">
+          <small>Teléfono inválido.</small>
+        </div>
       }
 
       <h6 class="section-label">Dirección de envío</h6>
@@ -72,11 +86,15 @@
           formControlName="direccionEnvio"
           [autoGrow]="true"
           rows="3"
-          placeholder="Ejem: De la iglesia 2c al norte, casa mano derecha portón negro.">
+          placeholder="Ejem: De la iglesia 2c al norte, casa mano derecha portón negro."
+        >
         </ion-textarea>
       </ion-item>
-      @if (isInvalid('direccionEnvio')) {
-        <ion-text color="danger"><small>La dirección es obligatoria.</small></ion-text>
+
+      @if (isInvalid("direccionEnvio")) {
+        <div class="error-text">
+          <small>La dirección es requerida.</small>
+        </div>
       }
 
       <!-- Botón de Acción -->
@@ -84,13 +102,16 @@
         expand="block"
         class="btn-primary"
         type="submit"
-        [disabled]="frmCheckout.invalid">
+        [disabled]="frmCheckout.invalid"
+      >
         CONFIRMAR MI PEDIDO
       </ion-button>
     </form>
 
     <div class="signup ion-padding-bottom">
-      <ion-note>Al confirmar, tu pedido pasará a cocina inmediatamente.</ion-note>
+      <ion-note
+        >Al confirmar, tu pedido pasará a cocina inmediatamente.</ion-note
+      >
     </div>
   </div>
 </ion-content>

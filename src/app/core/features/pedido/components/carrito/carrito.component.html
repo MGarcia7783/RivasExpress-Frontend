@@ -1,12 +1,16 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/cliente/home" text=""></ion-back-button>
+      <ion-back-button (click)="seguirComprando()" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title mode="ios">Mi Carrito</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Mi Carrito</span></h1>
+      </div>
+    </ion-title>
     <ion-buttons slot="end">
       @if (carritoService.cantidadTotal() > 0) {
-        <ion-button (click)="carritoService.limpiarCarrito()" color="light">
+        <ion-button (click)="carritoService.limpiarCarrito()">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       }
@@ -80,7 +84,7 @@
       } @empty {
         <div class="empty-cart-state">
           <div class="icon-circle">
-            <ion-icon name="cart-outline"></ion-icon>
+            <ion-icon name="cart"></ion-icon>
           </div>
           <h2>Tu carrito está vacío</h2>
           <p>Agrega tus platillos favoritos para verlos aquí.</p>
@@ -88,7 +92,7 @@
             expand="block"
             shape="round"
             (click)="seguirComprando()"
-            class="btn-continue"
+            class="btn-primary"
             >VER MENÚ</ion-button
           >
         </div>
@@ -117,7 +121,7 @@
       <ion-button
         expand="block"
         mode="ios"
-        class="btn-checkout"
+        class="btn-primary"
         (click)="irAlCheckout()"
       >
         CONFIRMAR PEDIDO

@@ -1,6 +1,6 @@
 <!-- Contenedor principal -->
-<ion-content class="login-page" fullscreen>
-  <div class="login-container">
+<ion-content class="login-page" scroll-y="false">
+  <div class="main-container">
     <!-- Sección de logo y título -->
     <div class="logo-section">
       <div class="logo-circle">
@@ -85,16 +85,6 @@
           Iniciar Sesión
         </ion-button>
 
-        <!--Botón google -->
-        <ion-button
-          fill="clear"
-          expand="block"
-          class="btn-google"
-          type="button"
-          (click)="loginWithGoogle()"
-        >
-          Iniciar con Google
-        </ion-button>
       </div>
     </form>
 

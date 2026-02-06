@@ -1,8 +1,8 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriaService } from 'src/app/core/features/categoria/services/categoria.service';
 import { ProductoService } from 'src/app/core/features/producto/services/producto.service';
-import { IProducto } from '../../core/features/producto/interface/iproducto';
+import { IProducto } from '../../../../core/features/producto/interface/iproducto';
 import { ICategoria } from 'src/app/core/features/categoria/interface/icategoria';
 import { InteractionService } from 'src/app/shared/interaction.service';
 import {
@@ -19,19 +19,16 @@ import {
   IonCol,
   IonRefresher,
   IonRefresherContent,
-  IonSkeletonText,
-  IonModal
-} from '@ionic/angular/standalone';
-import {CurrencyPipe } from '@angular/common';
+  IonModal, IonSpinner, IonBackButton } from '@ionic/angular/standalone';
+import { CurrencyPipe } from '@angular/common';
 import { CarritoService } from 'src/app/core/features/pedido/services/carrito.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-cliente.home.page',
   templateUrl: './cliente.home.page.component.html',
-  imports: [
+  imports: [IonSpinner,
     IonModal,
-    IonSkeletonText,
     IonCol,
     IonRow,
     IonGrid,
@@ -44,9 +41,8 @@ import { AuthService } from 'src/app/core/auth/auth.service';
     IonToolbar,
     IonHeader,
     CurrencyPipe,
-    IonRefresher,
-    IonRefresherContent
-  ],
+    IonRefresher
+],
   styleUrls: ['./cliente.home.page.component.scss'],
 })
 export class ClienteHomePageComponent implements OnInit {
@@ -57,7 +53,6 @@ export class ClienteHomePageComponent implements OnInit {
   private authService = inject(AuthService);
   public carritoService = inject(CarritoService);
   public router = inject(Router);
-
 
   public isMenuOpen = signal(false);
 
@@ -76,7 +71,7 @@ export class ClienteHomePageComponent implements OnInit {
   public pageSize = 6;
 
   ngOnInit() {
-    this.carritoService.inicializarCarrito();  // Asegurar que cargue el carrito del usuario actual
+    this.carritoService.inicializarCarrito(); // Asegurar que cargue el carrito del usuario actual
     this.cargarCategorias();
     this.cargarProductos();
   }
@@ -89,7 +84,7 @@ export class ClienteHomePageComponent implements OnInit {
   }
 
   // Cargar productos
-  cargarProductos(event?: any) {
+  async cargarProductos(event?: any) {
     this.isLoading.set(true);
 
     this.productoService
@@ -100,13 +95,13 @@ export class ClienteHomePageComponent implements OnInit {
         this.categoriaSeleccionada(),
       )
       .subscribe({
-        next: (res) => {
+        next: async (res) => {
           this.productos.set(res.elementos ?? []);
           this.totalPaginas.set(res.totalPaginas);
           this.isLoading.set(false);
           event?.target?.complete();
         },
-        error: () => {
+        error: async () => {
           (this.isLoading.set(false), event?.target?.complete());
         },
       });
@@ -154,12 +149,22 @@ export class ClienteHomePageComponent implements OnInit {
 
   irAlCarrito() {
     this.interaction.blurActiveElement();
-    this.router.navigate(['cliente/carrito']);
+
+    setTimeout(() => {
+      // Espera a que el modal se cierre
+      //this.router.navigate(['cliente/carrito']);
+      this.router.navigate(['home/cliente/carrito']);
+    }, 200);
   }
 
   irAMisPedidos() {
     this.interaction.blurActiveElement();
-    this.router.navigate(['cliente/mis-pedidos']);
+    this.setOpenMenu(false);
+
+    setTimeout(() => {
+      // Espera a que el modal se cierre
+      this.router.navigate(['home/cliente/mis-pedidos']);
+    }, 200);
   }
 
   async logout() {

@@ -1,20 +1,26 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/cliente/home" text=""></ion-back-button>
+      <ion-back-button
+        defaultHref="/home/cliente/dashboard"
+        text=""
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title mode="ios">Mis Pedidos</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Mis Pedidos</span></h1>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="cargarMisPedidos($event)">
-    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <div class="main-wrapper ion-padding">
     @if (isLoading()) {
-      <div class="ion-text-center ion-padding">
+      <div class="loader-container">
         <ion-spinner name="crescent" color="primary"></ion-spinner>
       </div>
     } @else {
@@ -31,11 +37,11 @@
             <div class="card-body">
               <div class="info-row">
                 <ion-icon name="time-outline"></ion-icon>
-                <span>{{ p.fechaRegistro | date:'dd MMM, h:mm a' }}</span>
+                <span>{{ p.fechaRegistro | date: "dd MMM, h:mm a" }}</span>
               </div>
               <div class="total-row">
                 <span>Total pagado:</span>
-                <strong>{{ p.total | currency:'C$' }}</strong>
+                <strong>{{ p.total | currency: "C$" }}</strong>
               </div>
             </div>
           </div>

@@ -133,7 +133,7 @@ export class ProductoRegistroComponent implements OnInit, OnDestroy {
 
   // Liberar recursos
   ngOnDestroy(): void {
-    this.frmProductoRegistro.reset();
+   // this.frmProductoRegistro.reset();
     this.imagePreview.set(undefined);
   }
 
@@ -275,7 +275,7 @@ export class ProductoRegistroComponent implements OnInit, OnDestroy {
           'checkmark-circle-outline'
         );
         this.interaction.blurActiveElement();
-        this.router.navigate(['/admin/producto']);
+        this.router.navigate(['/home/admin/producto/listado']);
       },
       error: async (err) => {
         await this.interaction.dismissLoading();

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
-  IonTitle,
   IonToolbar,
   IonGrid,
   IonRow,
@@ -12,28 +11,22 @@ import {
   IonIcon,
   IonButton,
   IonButtons,
-  IonList,
-  IonItem,
-  IonLabel,
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { InteractionService } from 'src/app/shared/interaction.service';
 import { PedidoService } from 'src/app/core/features/pedido/services/pedido.service';
 import { Icon } from 'ionicons/dist/types/components/icon/icon';
+import { interval, of, startWith, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-admin-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  templateUrl: './admin.home.page.html',
+  styleUrls: ['./admin.home.page.scss'],
   standalone: true,
   imports: [
-    IonLabel,
-    IonItem,
-    IonList,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonContent,
     IonGrid,
     IonRow,
@@ -45,7 +38,7 @@ import { Icon } from 'ionicons/dist/types/components/icon/icon';
     FormsModule,
   ],
 })
-export class HomePage {
+export class AdminHomePage {
   // Inyección de dependencias
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -56,37 +49,41 @@ export class HomePage {
   public userName: string = 'Administrador';
 
   // Variable para refrescar cada minuto
-  private intervalId: any;
+  private destroy$ = new Subject<void>();
 
   // Definición del menú de administración
   public adminModules = [
     {
       title: 'Categorías',
-      label: 'Organizar menú',
+      label: 'Gestión de categorías',
       icon: 'list-outline',
-      path: 'categoria',
+      module: 'categoria',
+      path: 'listado',
       color: '#6366f1',
     },
     {
       title: 'Productos',
-      label: 'Precios y stock',
+      label: 'Menú y precios',
       icon: 'fast-food-outline',
-      path: 'producto',
+      module: 'producto',
+      path: 'listado',
       color: '#10b981',
     },
     {
       title: 'Pedidos',
-      label: 'Órdenes hoy',
+      label: 'Pedidos activos',
       icon: 'bag-handle-outline',
-      path: 'pedido',
+      module: 'pedido',
+      path: 'listado',
       color: '#f59e0b',
       badgeSignal: this.pedidoService.pendientesCount,
     },
     {
       title: 'Usuarios',
-      label: 'Staff y clientes',
+      label: 'Clientes y staff',
       icon: 'people-outline',
-      path: 'usuario',
+      module: 'usuario',
+      path: 'listado',
       color: '#06b6d4',
     },
   ];
@@ -96,14 +93,21 @@ export class HomePage {
     this.getUserInfo();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   // Refrescar el home
   ionViewWillEnter() {
-    this.pedidoService.cargarPedidos(1, 10).subscribe();
+    const cargar = () => {
+      if (!this.authService.getToken()) return of(null);
+      return this.pedidoService.cargarPedidos(1, 10);
+    };
 
-    // Refrescar cada 1 minuto automáticamente
-    this.intervalId = setInterval(() => {
-      this.pedidoService.cargarPedidos(1, 10).subscribe();
-    }, 60000);
+    interval(60000)
+      .pipe(startWith(0), switchMap(cargar), takeUntil(this.destroy$))
+      .subscribe();
   }
 
   // Obtener información del usuario desde el token
@@ -119,19 +123,16 @@ export class HomePage {
   }
 
   // Navegar a otra ruta del menú
-  navTo(path: string) {
-    this.router.navigate([`/admin/${path}`]);
+  navTo(item: any) {
+    this.router.navigate(['/home/admin', item.module, item.path]);
   }
 
   // Cerrar sesión
   logout() {
+    this.interaction.blurActiveElement();
+
+    this.destroy$.next(); // corta intervalos antes de salir
     this.authService.logout();
     this.router.navigate([`/login`]);
-  }
-
-  // Limpiar enfoque al salir de la página
-  ionViewWillLeave(): void {
-    this.interaction.blurActiveElement();
-    if (this.intervalId) clearInterval(this.intervalId);
   }
 }

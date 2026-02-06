@@ -1,107 +1,27 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
 
-// 1. Cargando
-.custom-loading {
-  --background: rgba(255, 255, 255, 0.85); // Fondo blanco con transparencia
-  --backdrop-filter: blur(10px); // Efecto de desenfoque al fondo
-  --spinner-color: var(--ion-color-primary); // Color del círculo de carga
-  --color: var(--ion-color-dark); // Color del texto
+:root {
 
-  --border-radius: 20px;
-  font-weight: 600;
+  /* ---------- Fondos ---------- */
+  --bg-app: #f1f5f9;                 /* antes: --fondo-general */
+  --bg-surface: #ffffff;             /* antes: --color-blanco */
+  //--bg-input: #ffffff;               /* antes: --fondo-input */
+  --bg-input: rgba(255,255,255,0.15); /* antes: --background-input */
 
-  .loading-wrapper {
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); // Sombra suave para profundidad
-    padding: 25px !important;
-  }
+  /* ---------- Texto ---------- */
+  --text-title: #1e293b;            /* antes: --color-titulo / --color-text */
+  --text-body: #333333;          /* antes: --color-icono */
+  --text-error: #dc2626;              /* antes: --color-error */
+
+  /* ---------- Colores ---------- */
+  --color-primary: #0055ff;           /* antes: --color-primary */
+  --color-accent: #0055e5;            /* antes: --color-azul */
+  --color-white: #ffffff;
+  --color-icon: #6b7280;
+
+  /* ---------- Sombras ---------- */
+  --shadow-soft: rgba(20,40,80,0.06);  /* antes: --shadow-light */
+  --shadow-strong: rgba(43,128,255,0.22); /* antes: --shadow-medium */
+  
 }
 
-// Mensaje toast
-.modern-toast {
-  --border-radius: 16px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: white;
 
-  ion-icon {
-    color: white !important;
-  }
-}
-
-// Fondo y texto según tipo de toast
-.modern-toast.success-toast {
-  --background: #16b789;
-}
-
-.modern-toast.danger-toast {
-  --background: #af1e1e;
-}
-
-.modern-toast.warning-toast {
-  --background: #ea9b24;
-}
-
-.modern-toast.primary-toast {
-  --background: #1e3a8a;
-}
-
-// Alert personalizado
-.custom-alert {
-  --background: #ffffff;
-  --border-radius: 24px;
-
-  // Sombra y contenedor de la ventana
-  .alert-wrapper {
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-  }
-
-  // Título
-  .alert-head {
-    padding: 25px 20px 15px;
-    text-align: center;
-    //border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    margin-bottom: 15px;
-
-    .alert-title {
-      font-size: 1.25rem;
-      font-weight: 750;
-      color: #334155;
-    }
-  }
-
-  // Mensaje descriptivo
-  .alert-message {
-    text-align: center;
-    color: #64748b;
-    padding: 0 20px 20px;
-    font-size: 0.95rem;
-  }
-
-  // Botón Cancelar
-  .alert-button-cancel {
-    color: #5e6063 !important;
-    font-weight: 700 !important;
-    text-transform: capitalize;
-    font-size: 1rem;
-  }
-
-  // Botón Confirmar
-  .alert-button-confirm {
-    background: #3b82f6;
-    font-weight: 700 !important;
-    text-transform: capitalize;
-    font-size: 1rem;
-  }
-
-  // Botón Confirmar eliminar
-  .alert-button-confirm-delete {
-    color: #dc2626 !important;
-    font-weight: 700 !important;
-    text-transform: capitalize;
-    font-size: 1rem;
-  }
-}

@@ -13,8 +13,7 @@ import {
   IonRefresherContent,
   IonSpinner,
   IonBadge,
-  IonIcon,
-} from '@ionic/angular/standalone';
+  IonIcon, IonText } from '@ionic/angular/standalone';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
@@ -25,7 +24,6 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
     IonIcon,
     IonBadge,
     IonSpinner,
-    IonRefresherContent,
     IonRefresher,
     IonContent,
     IonTitle,
@@ -50,14 +48,14 @@ export class MisPedidosComponent implements OnInit {
     this.cargarMisPedidos();
   }
 
-  cargarMisPedidos(event?: any) {
+  async cargarMisPedidos(event?: any) {
     this.pedidoService.misPedidos().subscribe({
-      next: (res) => {
+      next: async (res) => {
         this.pedidos.set(res.elementos);
         this.isLoading.set(false);
         if (event) event.target.complete();
       },
-      error: () => {
+      error: async () => {
         this.isLoading.set(false);
         if (event) event.target.complete();
         this.interaction.showToast('Error al cargar tu historial', 'danger');

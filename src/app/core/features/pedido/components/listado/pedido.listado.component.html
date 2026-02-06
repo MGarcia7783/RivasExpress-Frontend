@@ -1,10 +1,17 @@
 <ion-header class="ion-no-border">
   <!-- Barra de Navegación -->
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/admin/home" text=""></ion-back-button>
+      <ion-back-button
+        defaultHref="/home/admin/dashboard"
+        text=""
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title>Gestión de Pedidos</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Gestión de Pedidos</span></h1>
+      </div>
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cargarPedidos()">
         <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
@@ -13,34 +20,27 @@
   </ion-toolbar>
 
   <!-- Barra de búsqueda -->
-  <ion-toolbar color="primary">
+  <ion-toolbar class="search-toolbar">
     <ion-searchbar
       mode="ios"
       placeholder="Buscar cliente..."
       class="custom-search"
       (ionInput)="setFiltro($event)"
-      [debounce]="300">
+      [debounce]="300"
+    >
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- Pull to refresh -->
-  <ion-refresher slot="fixed" (ionRefresh)="cargarPedidos($event)">
-    <ion-refresher-content pullingIcon="refresh-outline" refreshingSpinner="crescent"></ion-refresher-content>
-  </ion-refresher>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarPedidos()"> </ion-refresher>
 
   <div class="list-container ion-padding">
     @if (isLoading()) {
-      <!-- Estado de Carga (Skeletons) -->
-      @for (i of [1, 2, 3, 4]; track i) {
-        <div class="order-card skeleton-mode">
-          <ion-skeleton-text [animated]="true" style="width: 40%; height: 22px; border-radius: 8px;"></ion-skeleton-text>
-          <div class="dashed-line"></div>
-          <ion-skeleton-text [animated]="true" style="width: 70%; height: 18px; margin-bottom: 8px;"></ion-skeleton-text>
-          <ion-skeleton-text [animated]="true" style="width: 50%; height: 18px"></ion-skeleton-text>
-        </div>
-      }
+      <div class="loader-container">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </div>
     } @else {
       <!-- Lista Real de Pedidos -->
       @for (p of pedidos(); track p.idPedido) {
@@ -72,36 +72,57 @@
 
           <div class="card-footer">
             <div class="total-label">
-              Total: <span>{{ p.total | currency: "C$" : 'symbol' : '1.2-2' }}</span>
+              Total:
+              <span>{{ p.total | currency: "C$" : "symbol" : "1.2-2" }}</span>
             </div>
-            <ion-button fill="clear" color="primary" (click)="gestionEstado(p, $event)">
+            <ion-button
+              fill="clear"
+              color="primary"
+              (click)="gestionEstado(p, $event)"
+            >
               <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
             </ion-button>
           </div>
         </div>
       } @empty {
         <!-- Estado Vacío -->
-        <div class="empty-state">
+        <div class="empty-container">
           <ion-icon name="receipt-outline"></ion-icon>
           <h3>Sin registros</h3>
           <p>No se encontraron pedidos.</p>
         </div>
       }
-    }
 
-    <!-- Paginación Homogenizada -->
-    @if (totalPaginas() > 1) {
-      <div class="pagination-container">
-        <div class="pagination-buttons">
-          <ion-button fill="outline" size="small" (click)="prevPage()" [disabled]="paginaActual() === 1">
-            <ion-icon name="chevron-back-outline"></ion-icon> Anterior
-          </ion-button>
-          <ion-button fill="outline" size="small" (click)="nextPage()" [disabled]="paginaActual() === totalPaginas()">
-            Siguiente <ion-icon name="chevron-forward-outline"></ion-icon>
-          </ion-button>
+      <!-- Paginación -->
+      @if (totalPaginas() > 1) {
+        <div class="pagination-container">
+          <div class="pagination-btns">
+            <ion-button
+              fill="clear"
+              (click)="prevPage()"
+              [disabled]="paginaActual() === 1"
+            >
+              <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+            <div class="page-dot active"></div>
+            <ion-button
+              fill="clear"
+              (click)="nextPage()"
+              [disabled]="paginaActual() === totalPaginas()"
+            >
+              <ion-icon
+                name="chevron-forward-outline"
+                slot="icon-only"
+              ></ion-icon>
+            </ion-button>
+          </div>
+
+          <div class="page-indicator">
+            Página <strong>{{ paginaActual() }}</strong> de
+            <strong>{{ totalPaginas() }}</strong>
+          </div>
         </div>
-        <div class="page-info">Página {{ paginaActual() }} de {{ totalPaginas() }}</div>
-      </div>
+      }
     }
   </div>
 </ion-content>

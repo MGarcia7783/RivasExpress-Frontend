@@ -11,28 +11,21 @@ import {
   IonTitle,
   IonButton,
   IonSearchbar,
-  IonChip,
-  IonLabel,
   IonContent,
   IonRefresher,
-  IonRefresherContent,
-  IonSkeletonText,
   IonBadge,
   IonIcon,
-  IonBackButton,
-} from '@ionic/angular/standalone';
+  IonBackButton, IonSpinner } from '@ionic/angular/standalone';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pedido.listado',
   templateUrl: './pedido.listado.component.html',
   styleUrls: ['./pedido.listado.component.scss'],
-  imports: [
+  imports: [IonSpinner,
     IonBackButton,
     IonIcon,
     IonBadge,
-    IonSkeletonText,
-    IonRefresherContent,
     IonRefresher,
     IonContent,
     IonSearchbar,
@@ -74,7 +67,7 @@ export class PedidoListadoComponent {
     this.pedidoService
       .cargarPedidos(this.paginaActual(), this.pageSize, this.filtro())
       .subscribe({
-        next: (res) => {
+        next: async (res) => {
           this.pedidos.set(res.elementos ?? []);
           this.totalPaginas.set(res.totalPaginas);
           this.isLoading.set(false);
@@ -130,7 +123,7 @@ export class PedidoListadoComponent {
   // Detalle
   verDetalle(id: number) {
     this.interaction.blurActiveElement();
-    this.router.navigate(['/admin/pedido/detalle', id]);
+    this.router.navigate(['/home/admin/pedido/detalle', id]);
   }
 
   // Cambiar estado

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILogin } from './ilogin';
@@ -10,84 +10,73 @@ import { CarritoService } from '../features/pedido/services/carrito.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  url = `${getApiUrl()}/usuario`;
+  private http = inject(HttpClient);
+  private url = `${getApiUrl()}/usuario`;
 
   private carritoService = inject(CarritoService);
 
-  // Usuario autenticado
-  private usuarioAutenticado: ILogin | null = null;
+  private usuario: ILogin | null = null; // Usuario autenticado
+  private token: string | null = null; // Token JWT
 
-  // Token JWT
-  private token: string | null = null;
+  constructor() {
+    this.cargarSesion();
+  }
 
-  constructor(private http: HttpClient) {}
-
-  /* Método de login
-  login(userName: string, password: string): Observable<any> {
-    return this.http.post(`${this.url}/login`, { userName, password })
-  }*/
-
-  // Guardar usuario y token al iniciar sesión
+  // Login / guardar usuario y token al iniciar sesión
   login(userName: string, password: string): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.url}/login`, { userName, password })
-      .pipe(tap((response) => this.setSession(response)));
-  }
-
-  loginConGoogle(idToken: string): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.url}/login-google`, { idToken })
-      .pipe(tap((response) => this.setSession(response)));
+      .pipe(tap((res) => this.guardarSession(res)));
   }
 
   // Establecer sesión con usuario y token
-  private setSession(authResponse: AuthResponse): void {
-    this.usuarioAutenticado = authResponse.usuario;
-    this.token = authResponse.token;
+  private guardarSession({ usuario, token }: AuthResponse): void {
+    this.usuario = usuario;
+    this.token = token;
 
-    // Guardar token y usuario en storage
-    localStorage.setItem('token', authResponse.token);
-    localStorage.setItem('usuario', JSON.stringify(authResponse.usuario));
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('token', token);
 
-    // Cargar carrito con usuario logueado
-    this.carritoService.inicializarCarrito();
+    this.carritoService.inicializarCarrito(); // Cargar carrito con usuario logueado
   }
 
-  // Cerrar sesión
+  // Sesión
+  private cargarSesion(): void {
+    const token = localStorage.getItem('token');
+    const usuario = localStorage.getItem('usuario');
+
+    if (token) this.token = token;
+
+    if (usuario) {
+      try {
+        this.usuario = JSON.parse(usuario);
+      } catch {
+        this.logout();
+      }
+    }
+  }
+
   logout(): void {
-    this.usuarioAutenticado = null;
+    this.usuario = null;
     this.token = null;
+
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
   }
 
   // Retornar usuario autenticado
-  getUsuarioLogueado(): ILogin | null {
-    // Si ya lo tenemos en memoria, lo devolvemos sin consultar al storage
-    if (this.usuarioAutenticado) {
-      return this.usuarioAutenticado;
-    }
-
-    // Obtener usuario en el localStorage
-    const user = localStorage.getItem('usuario');
-    if (!user) return null; // no hay usuario autenticado
-
-    try {
-      // Convertirlo el JSON y guardarlo en memoria
-      this.usuarioAutenticado = JSON.parse(user) as ILogin;
-      return this.usuarioAutenticado; // devolver usuario autenticado
-    } catch {
-      localStorage.removeItem('usuario'); // eliminar el valor del storage
-      return null; // indicamos que no hay usuario válido
-    }
+  getUsuario(): ILogin | null {
+    return this.usuario;
   }
 
   // Retornar token JWT
   getToken(): string | null {
-    if (!this.token) {
-      this.token = localStorage.getItem('token');
-    }
     return this.token;
+  }
+
+  // Obtener el rol del usuario autenticado
+  getRol(): string | null {
+    return this.getUsuario()?.rol ?? null;
   }
 
   // Verificar si el usuario está autenticado
@@ -95,19 +84,10 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
-  // Obtener el rol del usuario autenticado
-  getRol(): string | null {
-    const usuario = this.getUsuarioLogueado();
-    return usuario ? usuario.rol : null;
-  }
-
   // Decodifica el token almacenado y devuelve su contenido (Payload)
   getDecodedToken(): any {
-    const token = this.getToken();
-    if (!token) return null;
-
     try {
-      return jwtDecode(token);
+      return this.token ? jwtDecode(this.token) : null;
     } catch (error) {
       return null;
     }

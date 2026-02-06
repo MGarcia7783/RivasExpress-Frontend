@@ -19,8 +19,6 @@ import {
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { InteractionService } from 'src/app/shared/interaction.service';
-import { isPlatform } from '@ionic/angular';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
 const PASSW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
@@ -49,6 +47,7 @@ export class LoginPage implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
   private interaction = inject(InteractionService);
+  cargando = false;
 
   // Variable booleana
   public passwordToggle: boolean = false;
@@ -89,11 +88,12 @@ export class LoginPage implements OnInit {
 
   // Liberar recursos
   ionViewWillLeave(): void {
+    this.passwordToggle = false;
     this.frmLogin.reset();
     this.interaction.blurActiveElement();
   }
 
-  // Login normal
+  // Login
   public async login(): Promise<void> {
     if (this.frmLogin.invalid) {
       this.frmLogin.markAllAsTouched();
@@ -117,53 +117,16 @@ export class LoginPage implements OnInit {
 
         // Redirigir según rol
         if (response.usuario.rol === 'Administrador') {
-          this.router.navigate(['/admin/home']);
+          //this.router.navigate(['/admin/home']);
+          this.router.navigate(['/home/admin/dashboard']);
+
         } else {
-          this.router.navigate(['/cliente/home']);
+          //this.router.navigate(['/cliente/home']);
+          this.router.navigate(['/home/cliente/dashboard']);
         }
       },
       error: async (err) => {
-        await this.interaction.dismissLoading();
-        await this.interaction.mostrarError(err);
-      },
-    });
-  }
-
-  // Login con google (solo movil)
-  async loginWithGoogle() {
-    if (!isPlatform('capacitor')) {
-      await this.interaction.showToast(
-        'Solo disponible en la app móvil.',
-        'warning',
-      );
-      return;
-    }
-
-    await this.interaction.showLoading('Conectando con Google...');
-
-    // 1. Abrir ventana de Google
-    const googleUser = await GoogleAuth.signIn();
-    const idToken = googleUser.authentication.idToken;
-
-    // 2. Enviar token a tu API de C#
-    this.authService.loginConGoogle(idToken).subscribe({
-      next: async (res) => {
-        await this.interaction.dismissLoading();
-
-        await this.interaction.showToast(
-          `Bienvenido: ${res.usuario.nombreCompleto}`,
-          'success',
-          'person-circle-outline',
-        );
-
-        // 3. Redirigir según rol
-        if (res.usuario.rol === 'Administrador') {
-          this.router.navigate(['/admin/home']);
-        } else {
-          this.router.navigate(['/cliente/home']);
-        }
-      },
-      error: async (err) => {
+        this.passwordToggle = false;
         await this.interaction.dismissLoading();
         await this.interaction.mostrarError(err);
       },

@@ -36,76 +36,368 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
-/* ================= MODAL TIPO BOTTOM SHEET ================= */
-.user-bottom-sheet {
-  --border-radius: 16px 16px 0 0;
-  --background: #ffffff;
-  --box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.1);
 
-  .sheet-content {
-    padding: 16px;
-  }
 
-  .sheet-header {
-    text-align: center;
-    margin-bottom: 12px;
+/*
+*-----------------------------------------------------
+*Sección de estilos para login y registro
+*-----------------------------------------------------
+*/
 
-    .handle-bar {
-      width: 36px;
-      height: 4px;
-      background: #cbd5e1;
-      border-radius: 2px;
-      margin: 0 auto 8px auto;
-    }
-
-    h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #334155;
-      margin: 0;
-    }
-  }
-
-  .sheet-menu-grid {
-    display: flex;
-    justify-content: space-around;
-
-    .menu-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 0.85rem;
-      color: #334155;
-      cursor: pointer;
-      gap: 4px;
-
-      .icon-wrapper {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        color: white;
-
-        &.blue {
-          background: #3b82f6;
-        }
-        &.orange {
-          background: #f97316;
-        }
-        &.green {
-          background: #22c55e;
-        }
-
-        ion-icon {
-          font-size: 1.6rem;
-        }
-      }
-
-      span {
-        font-weight: 600;
-      }
-    }
-  }
+/* Contenedor general */
+.main-container {
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: start;
+  padding: 40px 30px;
+  box-sizing: border-box;
 }
+
+/* Sección del logo y título */
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Logo circular */
+.logo-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px; /* margen amplio debajo del logo */
+  box-shadow: 0 10px 26px var(--shadow-soft);
+}
+
+/* Icono dentro del logo */
+.logo-icon {
+  font-size: 42px;
+  color: var(--color-white);
+}
+
+/* Título principal */
+h1 {
+  margin: 0 0 18px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-title);
+  letter-spacing: 1px;
+}
+
+/* Formulario */
+.register-container form {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Inputs */
+.custom-input-item {
+  --background: var(--color-white);
+  --border-radius: 12px;
+  --padding-start: 4px;
+  --color: var(--text-body);
+  --highlight-color-focused: var(--color-primary);
+  --highlight-color-valid: var(--color-primary);
+  margin-bottom: 14px;
+  box-shadow: 0 6px 14px var(--shadow-soft);
+  align-items: center;
+}
+
+/* Icono dentro del input */
+.icon-wrapper {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.icon-wrapper ion-icon {
+  color: var(--color-icon);
+  font-size: 25px;
+}
+
+/* Botón del ojo */
+.eye-button {
+  --padding-start: 0;
+  --padding-end: 8px;
+  margin: 0;
+  height: 24px;
+}
+
+.eye-button ion-icon {
+  font-size: 20px;
+  color: var(--color-icon);
+}
+
+/* Texto de error */
+.error-text {
+  color: var(--text-error);
+  font-size: 12px;
+  margin: -8px 0 10px 14px;
+  display: block;
+}
+
+.error-text small {
+  font-weight: 500;
+  display: block;
+}
+
+/* Botones */
+.btn-primary {
+  --border-radius: 12px;
+  --background: var(--color-primary);
+  --color: var(--color-white);
+  margin-top: 15px;
+  box-shadow: 0 10px 22px var(--shadow-strong);
+  height: 55px;
+  font-weight: 600;
+}
+
+/* Texto de registro / login */
+.signup {
+  margin-top: 20px;
+  color: var(--text-body);
+  font-size: 14px;
+  text-align: center;
+}
+
+.signup a {
+  color: var(--color-primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/*
+*-----------------------------------------------------
+*Sección de estilos para listados
+*-----------------------------------------------------
+*/
+
+/* Encabezado de la página*/
+.main-header {
+  color: var(--color-white);
+}
+
+.page-title {
+  padding-left: 60px;
+  text-align: left;
+  background: var(--color-primary);
+}
+
+.page-title-text {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--color-white);
+}
+
+.page-title-text span {
+  font-weight: 300;
+  opacity: 0.85;
+}
+
+/* Buscar registro */
+.search-toolbar {
+  padding-right: 0;
+  padding-left: 0;
+  padding-top: 10px;
+  color: var(--color-white);
+  --background: var(--color-primary) !important;
+}
+
+.search-toolbar .custom-search {
+  --background: var(--bg-input);
+  --color: var(--color-white);
+  --icon-color: var(--color-white);
+  --clear-button-color: var(--color-white);
+  border-radius: 14px;
+  padding: 0 16px 12px;
+}
+
+/* Contenedor principal */
+.list-container {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+/* Tarjetas */
+.custom-card-item {
+  background: var(--color-white);
+  border-radius: 18px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s;
+}
+
+/* Icono de la tarjeta */
+.icon-box {
+  width: 50px;
+  height: 50px;
+  background: #eef2ee;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box ion-icon {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+
+/* Información de la tarjeta */
+.custom-card-item .info-label {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.custom-card-item .info-label h2 {
+  font-weight: 700;
+  color: var(--text-title);
+  margin: 0 0 4px 0;
+  font-size: 1.05rem;
+}
+
+.custom-card-item .info-label p {
+  margin: 3px 0 0;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Acciones de la tarjeta */
+.custom-card-item .actions {
+  display: flex;
+}
+
+.custom-card-item .actions ion-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  margin: 0;
+}
+
+/* Estado activo */
+.custom-card-item:active {
+  transform: scale(0.98);
+}
+
+/* Estado vacío */
+.empty-container {
+  text-align: center;
+  margin-top: 100px;
+  color: #94a3b8;
+}
+
+.empty-container ion-icon {
+  font-size: 4rem;
+  opacity: 0.3;
+}
+
+.empty-container h3 {
+  color: #475569;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.empty-container p {
+  font-size: 0.9rem;
+}
+
+/* Paginación */
+.pagination-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 30px;
+}
+
+.pagination-btns {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2px 8px;
+}
+
+.pagination-btns ion-button {
+  --color: var(--color-primary);
+  margin: 0;
+}
+
+.page-dot {
+  width: 6px;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+.page-dot.active {
+  background: var(--color-primary);
+}
+
+.page-indicator {
+  font-size: 0.85rem;
+  color: #64748b;
+  background: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.page-indicator strong {
+  color: var(--color-primary);
+}
+
+/* Botón agregar */
+.icon-fab-button {
+  --box-shadow: 0 8px 16px rgbs(45, 211, 111, 0.3);
+}
+
+/*
+*-----------------------------------------------------
+*Sección de estilos para registro
+*-----------------------------------------------------
+*/
+
+/* Contenedor principal */
+.register-page {
+  --background: var(--bg-app);
+  height: 100%;
+}
+
+.register-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  min-height: 100%;
+}
+

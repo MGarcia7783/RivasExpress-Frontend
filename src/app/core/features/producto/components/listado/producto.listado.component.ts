@@ -19,24 +19,21 @@ import {
   IonLabel,
   IonButton,
   IonFab,
-  IonFabButton,
-} from '@ionic/angular/standalone';
+  IonFabButton, IonSpinner } from '@ionic/angular/standalone';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-producto.listado',
   templateUrl: './producto.listado.component.html',
   styleUrls: ['./producto.listado.component.scss'],
-  imports: [
+  imports: [IonSpinner,
     IonFabButton,
     IonFab,
     IonButton,
     IonLabel,
     IonIcon,
     IonList,
-    IonSkeletonText,
     IonRefresher,
-    IonRefresherContent,
     IonContent,
     IonSearchbar,
     IonTitle,
@@ -75,7 +72,7 @@ export class ProductoListadoComponent {
     this.productoService
       .cargarProductos(this.paginaActual(), this.pageSize, this.filtro())
       .subscribe({
-        next: (res) => {
+        next: async (res) => {
           this.productos.set(res.elementos ?? []);
           this.totalPaginas.set(res.totalPaginas);
           this.isLoading.set(false);
@@ -149,8 +146,8 @@ export class ProductoListadoComponent {
     this.interaction.blurActiveElement();
     this.router.navigate(
       producto
-        ? ['/admin/producto/registro', producto.idProducto]
-        : ['/admin/producto/registro'],
+        ? ['/home/admin/producto/registro', producto.idProducto]
+        : ['/home/admin/producto/registro'],
     );
   }
 }

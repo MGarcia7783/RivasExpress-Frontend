@@ -1,18 +1,21 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/admin/usuario" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Detalle del Cliente</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Detalle</span></h1>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="main-wrapper">
     @if (isLoading()) {
-      <div class="ion-text-center ion-padding loader-container">
+      <div class="loader-container">
         <ion-spinner name="crescent" color="primary"></ion-spinner>
-        <p>Cargando información...</p>
       </div>
     } @else {
       @if (user(); as usuario) {
@@ -67,17 +70,11 @@
               <ion-label>
                 <h2 [class.text-danger]="!usuario.esActivo">
                   {{
-                    usuario.esActivo
-                      ? "Cuenta Habilitada"
-                      : "Cuenta Suspendida"
+                    usuario.esActivo ? "Cuenta habilitada" : "Cuenta suspendida"
                   }}
                 </h2>
                 <p>
-                  {{
-                    usuario.esActivo
-                      ? "Acceso al total"
-                      : "Acceso restringido"
-                  }}
+                  {{ usuario.esActivo ? "Acceso total" : "Acceso restringido" }}
                 </p>
               </ion-label>
               <div style="margin-right: 20px">

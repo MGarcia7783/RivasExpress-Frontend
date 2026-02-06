@@ -18,8 +18,7 @@ import {
   IonSearchbar,
   IonRefresher,
   IonRefresherContent,
-  IonSkeletonText,
-} from '@ionic/angular/standalone';
+  IonSkeletonText, IonSpinner } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -28,9 +27,7 @@ import { Router } from '@angular/router';
   templateUrl: './categoria.listado.component.html',
   styleUrls: ['./categoria.listado.component.scss'],
   standalone: true,
-  imports: [
-    IonSkeletonText,
-    IonRefresherContent,
+  imports: [IonSpinner,
     IonRefresher,
     IonSearchbar,
     IonHeader,
@@ -45,8 +42,8 @@ import { Router } from '@angular/router';
     IonBackButton,
     IonFab,
     IonFabButton,
-    CommonModule,
-  ],
+    CommonModule
+],
 })
 export class CategoriaListadoComponent {
   // Inyección de depencias
@@ -76,7 +73,7 @@ export class CategoriaListadoComponent {
     this.categoriaService
       .cargarCategorias(this.paginaActual(), this.pageSize, this.filtro())
       .subscribe({
-        next: (res) => {
+        next: async (res) => {
           this.categorias.set(res.elementos ?? []);
           this.totalPaginas.set(res.totalPaginas);
           this.isLoading.set(false);
@@ -150,8 +147,8 @@ export class CategoriaListadoComponent {
     this.interaction.blurActiveElement();
     this.router.navigate(
       categoria
-        ? ['/admin/categoria/registro', categoria.idCategoria]
-        : ['/admin/categoria/registro'],
+        ? ['/home/admin/categoria/registro', categoria.idCategoria]
+        : ['/home/admin/categoria/registro'],
     );
   }
 }

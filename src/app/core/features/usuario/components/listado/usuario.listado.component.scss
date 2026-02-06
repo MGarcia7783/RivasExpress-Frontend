@@ -1,175 +1,57 @@
+/* =====================================================
+   Fondo general
+===================================================== */
 ion-content {
-  --background: #f8f9fc;
+  --background: var(--bg-app);
+  width: 100%;
+  overflow-x: hidden;
 }
 
-.bg-transparent {
-  background: transparent;
+/* =====================================================
+   Tarjeta Premium
+===================================================== */
+ion-list {
+  background: var(--bg-app);
 }
 
-// Buscador profesional
-.custom-search {
-  --background: rgba(255, 255, 255, 0.18);
-  --color: white;
-  --placeholder-color: rgba(255, 255, 255, 0.7);
-  --icon-color: white;
-  --border-radius: 14px;
-  padding: 0 16px 12px 16px;
-}
-
-.list-container {
-  padding: 16px;
-}
-
-// Tarjeta Premium
-.custom-card-item {
-  background: white;
-  border-radius: 20px;
-  padding: 16px;
-  margin-bottom: 14px;
+.custom-card-item .info-label .user-status-row {
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f1f5f9;
-  transition: all 0.2s ease-in-out;
-
-  &:active {
-    transform: scale(0.97);
-    background: #fdfdfd;
-  }
-
-  .user-avatar {
-    width: 52px;
-    height: 52px;
-    background: #eef2ff;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    ion-icon {
-      font-size: 1.6rem;
-      color: var(--ion-color-primary);
-    }
-  }
-
-  .info-label {
-    flex: 1;
-    margin-left: 14px;
-
-    h3 {
-      font-weight: 700;
-      color: #1e293b;
-      margin: 0 0 4px 0;
-      font-size: 1.05rem;
-    }
-
-    p {
-      margin: 2px 0;
-      color: #64748b;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      ion-icon { font-size: 14px; }
-    }
-
-    .user-status-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .badge-active {
-      background: #dcfce7;
-      color: #16a34a;
-      padding: 3px 10px;
-      border-radius: 8px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .badge-inactive {
-      background: #fee2e2;
-      color: #dc2626;
-      padding: 3px 10px;
-      border-radius: 8px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .orders-count {
-      color: #94a3b8;
-      font-size: 0.8rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-  }
+  gap: 12px;
+  margin-top: 8px;
 }
 
-// Estilo Skeleton Mejorado
-.skeleton-mode {
-  .skeleton-avatar {
-    width: 52px; height: 52px; border-radius: 16px; margin: 0;
-  }
-  .skeleton-body {
-    flex: 1; margin-left: 14px;
-  }
+/* =====================================================
+   Badges de estado
+===================================================== */
+.badge-active {
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-// Paginación Moderna
-.pagination-wrapper {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 30px;
-
-  .page-indicator {
-    font-size: 0.85rem;
-    color: #64748b;
-    background: white;
-    padding: 6px 16px;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    strong { color: var(--ion-color-primary); }
-  }
-
-  .pagination-btns {
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    padding: 2px 8px;
-
-    ion-button {
-      --color: var(--ion-color-primary);
-      margin: 0;
-    }
-
-    .page-dot {
-      width: 6px;
-      height: 6px;
-      background: #e2e8f0;
-      border-radius: 50%;
-      margin: 0 8px;
-      &.active { background: var(--ion-color-primary); }
-    }
-  }
+.badge-inactive {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.empty-container {
-  text-align: center;
-  padding: 60px 20px;
+.orders-count {
   color: #94a3b8;
-  .fade-icon { font-size: 4rem; opacity: 0.2; margin-bottom: 10px; }
-  h3 { color: #475569; font-weight: 700; margin: 0; }
-  p { margin: 5px 0 0; font-size: 0.9rem; }
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
+

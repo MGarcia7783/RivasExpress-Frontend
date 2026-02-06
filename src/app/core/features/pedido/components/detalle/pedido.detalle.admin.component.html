@@ -1,18 +1,21 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/admin/pedido" text=""></ion-back-button>
+      <ion-back-button defaultHref="/home/admin/pedido/lista" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Detalle de Orden</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Detalle de Orden</span></h1>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="main-wrapper">
     @if (isLoading()) {
-      <div class="loader-container ion-padding">
+      <div class="loader-container">
         <ion-spinner name="crescent" color="primary"></ion-spinner>
-        <p>Cargando ticket...</p>
       </div>
     } @else {
       @if (pedido(); as p) {
@@ -52,8 +55,8 @@
                 color="primary"
               ></ion-icon>
               <ion-label class="ion-text-wrap">
-                <p>Dirección registrada:</p>
                 <h3>{{ p.direccionEnvio }}</h3>
+                <p>Dirección registrada:</p>
               </ion-label>
             </ion-item>
 
@@ -66,13 +69,6 @@
                 mode="ios"
               >
                 <ion-icon name="logo-whatsapp" slot="start"></ion-icon> WhatsApp
-              </ion-button>
-              <ion-button
-                (click)="verEnMapa()"
-                class="btn-action maps"
-                mode="ios"
-              >
-                <ion-icon name="map-outline" slot="start"></ion-icon> Ver Mapa
               </ion-button>
             </div>
           </div>
@@ -102,11 +98,6 @@
             <div class="ticket-total">
               <span>TOTAL A PAGAR</span>
               <strong>{{ p.total | currency: "C$" : 'symbol' : '1.2-2' }}</strong>
-            </div>
-
-            <div class="payment-info">
-              <ion-icon name="cash-outline"></ion-icon>
-              <span>Método: <strong>Efectivo</strong></span>
             </div>
           </div>
 

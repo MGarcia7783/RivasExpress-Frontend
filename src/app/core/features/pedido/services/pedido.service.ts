@@ -4,6 +4,7 @@ import { getApiUrl } from 'src/app/shared/api-url';
 import { IPedido } from '../interface/ipedido';
 import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { IPagedResponse } from 'src/app/shared/ipagedresponse';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class PedidoService {
       .set('pageSize', pageSize.toString());
 
     if (filtro && filtro.trim().length > 0)
-      params = params.set('flitro', filtro.trim());
+      params = params.set('filtro', filtro.trim());
 
     return this.http.get<IPagedResponse<IPedido>>(this.url, { params }).pipe(
       tap((res) => {

@@ -1,153 +1,47 @@
-:host ::ng-deep {
-  ion-content {
-    --background: #f8f9fc;
+/* =====================================================
+   Fondo general
+   ===================================================== */
+ion-content {
+  --background: var(--bg-app);
+  width: 100%;
+  overflow-x: hidden;
+}
 
-    // Buscar
-    .custom-search {
-      --background: rgba(255, 255, 255, 0.15);
-      --color: white;
-      --placeholder-color: rgba(255, 255, 255, 0.7);
-      --icon-color: white;
-      --border-radius: 12px;
-      padding: 0 10px 10px 10px;
-    }
+/* =====================================================
+   Tarjetas
+   ===================================================== */
+ion-list {
+  background: var(--bg-app);
+}
 
-    // Contendor
-    .list-container {
-      padding: 15px;
-    }
+/* =====================================================
+   Imagen
+   ===================================================== */
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
-    // Tarjetas
-    .custom-card-item {
-      background: white;
-      border-radius: 18px;
-      padding: 12px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-      transition: transform 0.2s;
+/* =====================================================
+   Precio
+   ===================================================== */
+.price-tag {
+  font-weight: 800;
+  color: var(--ion-color-success);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-      &.not-available {
-        opacity: 0.7; // Se ve un poco más tenue si no hay stock
-      }
-
-      /// Icono / imagen
-      .icon-box {
-        width: 50px;
-        height: 50px;
-        background: #fff4e5; // Color melocotón suave para comida
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .product-image {
-          width: 50px;
-          height: 50px;
-          object-fit: cover;
-          border-radius: 8px;
-        }
-
-        ion-icon {
-          font-size: 1.5rem;
-          color: #ff9f1c;
-        }
-      }
-
-      // Información
-      .info-label {
-        flex: 1;
-        margin-left: 15px;
-        h2 {
-          font-weight: 700;
-          color: #334155;
-          margin: 0;
-          font-size: 1rem;
-        }
-        p {
-          margin: 2px 0;
-          color: #94a3b8;
-          font-size: 0.8rem;
-        }
-
-        // Precio
-        .price-tag {
-          font-weight: 800;
-          color: var(--ion-color-success);
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-
-          .status-out {
-            background: var(--ion-color-danger);
-            color: white;
-            font-size: 0.65rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            text-transform: uppercase;
-          }
-        }
-      }
-
-      .actions {
-        display: flex;
-        ion-button {
-          --padding-start: 8px;
-          --padding-end: 8px;
-          margin: 0;
-        }
-      }
-    }
-
-    /* Estilo Skeleton */
-    .skeleton-mode {
-      box-shadow: none;
-      border: 1px solid #f0f0f0;
-      .skeleton-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 14px;
-        margin: 0;
-      }
-    }
-
-    .empty-container {
-      text-align: center;
-      margin-top: 100px;
-      color: #94a3b8;
-      ion-icon.fade-icon {
-        font-size: 4rem;
-        opacity: 0.2;
-      }
-      h3 {
-        color: #475569;
-        font-weight: 700;
-      }
-    }
-
-    .pagination-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      margin-top: 16px;
-
-      .pagination-buttons {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 10px;
-      }
-
-      .page-info {
-        font-size: 0.8rem;
-        color: var(--ion-color-medium);
-        text-align: center;
-        background: rgba(0, 0, 0, 0.03);
-        padding: 4px 12px;
-        border-radius: 12px;
-      }
-    }
-  }
+/* Estado sin stock */
+.status-out {
+  background: var(--ion-color-danger);
+  color: white;
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
 }

@@ -1,51 +1,59 @@
+/* =====================================================
+   Fondo general
+   ===================================================== */
 ion-content {
-  --background: #f8f9fc;
+  --background: var(--bg-app);
 }
 
-.main-wrapper {
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-// Cabecera Recta y Moderna
+/* =====================================================
+   Cabecera recta y moderna
+   ===================================================== */
 .order-header-box {
-  background: var(--ion-color-primary);
+  background: var(--color-primary);
   padding: 30px 20px 50px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  color: white;
+  color: var(--color-white);
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
-
-  h1 {
-    margin: 0;
-    font-weight: 800;
-    font-size: 1.6rem;
-    letter-spacing: -1px;
-  }
-  p {
-    margin: 5px 0 0;
-    opacity: 0.8;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  ion-badge {
-    --padding-start: 12px;
-    --padding-end: 12px;
-    font-weight: 700;
-    border-radius: 10px;
-  }
 }
 
+.order-header-box h1 {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -1px;
+  color: var(--color-white);
+}
+
+.order-header-box p {
+  margin: 5px 0 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.order-header-box ion-badge {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+/* =====================================================
+   Contenedor de secciones
+   ===================================================== */
 .sections-container {
   padding: 15px 20px;
-  margin-top: -30px; // Eleva las tarjetas sobre el azul
+  margin-top: -30px;
 }
 
+/* =====================================================
+   Títulos de sección
+   ===================================================== */
 .section-title {
   font-weight: 700;
   color: #475569;
@@ -54,144 +62,161 @@ ion-content {
   text-transform: uppercase;
 }
 
-// Tarjeta de Información
+/* =====================================================
+   Tarjeta de información
+   ===================================================== */
 .info-card {
-  background: white;
+  background: var(--color-white);
   border-radius: 24px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
-
-  ion-item {
-    --background: transparent;
-    h3 {
-      font-weight: 700;
-      color: #1e293b;
-      margin: 0;
-    }
-    p {
-      font-size: 0.85rem;
-      color: #94a3b8;
-    }
-  }
 }
 
+.info-card ion-item {
+  --background: transparent;
+}
+
+.info-card ion-item h3 {
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.info-card ion-item p {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+/* =====================================================
+   Acciones rápidas
+   ===================================================== */
 .quick-actions {
   display: flex;
   gap: 10px;
   margin-top: 10px;
-  .btn-action {
-    flex: 1;
-    height: 48px;
-    --border-radius: 14px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    &.whatsapp {
-      --background: #25d366;
-      --color: white;
-    }
-    &.maps {
-      --background: #f1f5f9;
-      --color: #1e293b;
-    }
-  }
 }
 
-// ESTILO TICKET DE COMIDA
+.quick-actions .btn-action {
+  flex: 1;
+  height: 48px;
+  --border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.quick-actions .btn-action.whatsapp {
+  --background: #25d366;
+  --color: var(--color-white);
+}
+
+/* =====================================================
+   Estilo ticket de comida
+   ===================================================== */
 .ticket-container {
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 24px;
   padding: 24px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   position: relative;
   border: 1px solid #f1f5f9;
-
-  .ticket-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: #94a3b8;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 10px;
-  }
-
-  .ticket-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; // Alinea el bloque de texto con el precio
-    margin-bottom: 12px;
-
-    .item-desc {
-      display: flex;
-      align-items: center; // <--- ESTO ES LO QUE FALTA (Alinea cantidad y nombre)
-      gap: 12px; // Espacio horizontal entre el número y el texto
-
-      .qty {
-        font-weight: 800;
-        color: var(--ion-color-primary);
-        font-size: 1.1rem;
-        line-height: 1; // Fuerza a que no tenga espacio extra arriba/abajo
-        min-width: 20px; // Evita que se mueva si el número cambia de 1 a 2 cifras
-      }
-
-      .name {
-        font-weight: 600;
-        color: #334155;
-        font-size: 1rem;
-        line-height: 1; // Mismo line-height para que la base sea igual
-      }
-    }
-
-    .price {
-      font-weight: 700;
-      color: #1e293b;
-    }
-  }
-
-  .ticket-divider {
-    border-top: 2px dashed #e2e8f0;
-    margin: 20px 0;
-  }
-
-  .ticket-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    span {
-      font-weight: 700;
-      color: #64748b;
-      font-size: 0.9rem;
-    }
-    strong {
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: var(--ion-color-primary);
-    }
-  }
-
-  .payment-info {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #f8fafc;
-    padding: 10px;
-    border-radius: 12px;
-    color: #475569;
-    font-size: 0.85rem;
-    ion-icon {
-      font-size: 1.2rem;
-      color: #10b981;
-    }
-  }
 }
 
+/* Header del ticket */
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 10px;
+}
+
+/* Filas del ticket */
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* Descripción del ítem */
+.item-desc {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Cantidad */
+.item-desc .qty {
+  font-weight: 800;
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  line-height: 1;
+  min-width: 20px;
+}
+
+/* Nombre del producto */
+.item-desc .name {
+  font-weight: 600;
+  color: var(--text-body);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Precio */
+.ticket-row .price {
+  font-weight: 700;
+  color: var(--text-body);
+}
+
+/* Separador */
+.ticket-divider {
+  border-top: 2px dashed #e2e8f0;
+  margin: 20px 0;
+}
+
+/* Total */
+.ticket-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-total span {
+  font-weight: 700;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.ticket-total strong {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+/* Información de pago */
+.payment-info {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 12px;
+  color: #475569;
+  font-size: 0.85rem;
+}
+
+/* =====================================================
+   Footer informativo
+   ===================================================== */
 .info-footer {
   text-align: center;
   margin-top: 40px;
-  color: #cbd5e1;
+  color: #99a0aa;
   font-size: 0.75rem;
   padding-bottom: 30px;
   display: flex;

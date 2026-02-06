@@ -123,7 +123,6 @@ export class CarritoService {
 
   // Limpia el carrito en memoria (sin tocar storage)
 
-
   // Retorna los items actuales como array
   getItems(): IDetallePedido[] {
     return this._items();

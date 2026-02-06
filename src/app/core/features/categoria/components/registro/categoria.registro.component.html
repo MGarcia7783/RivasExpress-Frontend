@@ -1,10 +1,16 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/admin/categoria"></ion-back-button>
+      <ion-back-button
+        defaultHref="/home/admin/categoria/listado"
+      ></ion-back-button>
     </ion-buttons>
     <!-- Título -->
-    <ion-title> Categoría</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>{{ fr["id"]?.value ? "Actualizar" : "Registrar" }}</span></h1>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 

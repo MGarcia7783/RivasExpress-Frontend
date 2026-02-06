@@ -1,10 +1,12 @@
 <!-- ================= HEADER ================= -->
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary" class="main-header">
+  <ion-toolbar class="main-header">
+    <ion-buttons slot="start">
+    </ion-buttons>
     <!-- Título a la izquierda -->
-    <ion-title slot="start" class="brand-title" mode="ios">
-      <div class="brand-box">
-        <h1 class="logo-text"><span>Rivas Express</span></h1>
+    <ion-title slot="start" class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Rivas Express</span></h1>
       </div>
     </ion-title>
 
@@ -23,7 +25,7 @@
   </ion-toolbar>
 
   <!-- Buscador -->
-  <ion-toolbar color="primary" class="search-toolbar">
+  <ion-toolbar class="search-toolbar">
     <ion-searchbar
       mode="ios"
       placeholder="¿Qué se te antoja hoy?"
@@ -38,8 +40,8 @@
 <ion-modal
   [isOpen]="isMenuOpen()"
   (didDismiss)="setOpenMenu(false)"
-  [initialBreakpoint]="0.30"
-  [breakpoints]="[0, 0.30]"
+  [initialBreakpoint]="0.3"
+  [breakpoints]="[0, 0.3]"
   handleBehavior="cycle"
   mode="ios"
   class="user-bottom-sheet"
@@ -52,23 +54,16 @@
       </div>
 
       <div class="sheet-menu-grid">
-        <!--div class="menu-item" (click)="irAPerfil(); setOpenMenu(false)">
-          <div class="icon-wrapper blue">
-            <ion-icon name="person-circle-outline"></ion-icon>
-          </div>
-          <span>Perfil</span>
-        </div-->
-
         <div class="menu-item" (click)="irAMisPedidos(); setOpenMenu(false)">
-          <div class="icon-wrapper orange">
+          <div class="icon-wrapper blue">
             <ion-icon name="receipt-outline"></ion-icon>
           </div>
           <span>Pedidos</span>
         </div>
 
         <div class="menu-item" (click)="irAlCarrito(); setOpenMenu(false)">
-          <div class="icon-wrapper green">
-            <ion-icon name="cart-outline"></ion-icon>
+          <div class="icon-wrapper orange">
+            <ion-icon name="cart"></ion-icon>
           </div>
           <span>Carrito</span>
         </div>
@@ -78,9 +73,8 @@
 </ion-modal>
 
 <!-- ================= CONTENIDO PRINCIPAL ================= -->
-<ion-content>
+<ion-content class="client-page" fullscreen>
   <ion-refresher slot="fixed" (ionRefresh)="cargarProductos($event)">
-    <ion-refresher-content pullingIcon="refresh-outline" refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
 
   <!-- Categorías -->
@@ -91,16 +85,26 @@
         <div class="cart-icon-container">
           <ion-icon name="cart"></ion-icon>
           @if (carritoService.cantidadTotal() > 0) {
-            <span class="cart-badge-dot">{{ carritoService.cantidadTotal() }}</span>
+            <span class="cart-badge-dot">{{
+              carritoService.cantidadTotal()
+            }}</span>
           }
         </div>
       </div>
 
-      <div class="chip-item" [class.active]="categoriaSeleccionada() === null" (click)="seleccionarCategoria(null)">
+      <div
+        class="chip-item"
+        [class.active]="categoriaSeleccionada() === null"
+        (click)="seleccionarCategoria(null)"
+      >
         Todos
       </div>
       @for (cat of categorias(); track cat.idCategoria) {
-        <div class="chip-item" [class.active]="categoriaSeleccionada() === cat.idCategoria" (click)="seleccionarCategoria(cat.idCategoria)">
+        <div
+          class="chip-item"
+          [class.active]="categoriaSeleccionada() === cat.idCategoria"
+          (click)="seleccionarCategoria(cat.idCategoria)"
+        >
           {{ cat.nombreCategoria }}
         </div>
       }
@@ -110,21 +114,9 @@
   <!-- Listado -->
   <div class="list-container ion-padding">
     @if (isLoading()) {
-      <ion-grid class="ion-no-padding product-grid">
-        <ion-row>
-          @for (i of [1, 2, 3, 4, 5, 6]; track i) {
-            <ion-col size="6" size-md="4" size-lg="3">
-              <div class="product-card skeleton-mode">
-                <div class="image-holder"><ion-skeleton-text [animated]="true"></ion-skeleton-text></div>
-                <div class="product-body">
-                  <ion-skeleton-text [animated]="true" style="width: 80%; height: 14px"></ion-skeleton-text>
-                  <ion-skeleton-text [animated]="true" style="width: 100%; height: 34px"></ion-skeleton-text>
-                </div>
-              </div>
-            </ion-col>
-          }
-        </ion-row>
-      </ion-grid>
+      <div class="loader-container">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </div>
     } @else {
       @if (productos().length > 0) {
         <ion-grid class="ion-no-padding product-grid">
@@ -134,14 +126,21 @@
                 <div class="product-card">
                   <div class="image-holder">
                     <img [src]="prod.imagen" [alt]="prod.nombreProducto" />
-                    <div class="price-tag">{{ prod.precio | currency: "C$" : "symbol" : "1.2-2" }}</div>
+                    <div class="price-tag">
+                      {{ prod.precio | currency: "C$" : "symbol" : "1.2-2" }}
+                    </div>
                   </div>
                   <div class="product-body">
                     <div class="product-texts">
                       <h3>{{ prod.nombreProducto }}</h3>
                       <p>{{ prod.descripcionProducto }}</p>
                     </div>
-                    <ion-button expand="block" class="add-button" mode="ios" (click)="agregarAlCarrito(prod)">
+                    <ion-button
+                      expand="block"
+                      class="add-button"
+                      mode="ios"
+                      (click)="agregarAlCarrito(prod)"
+                    >
                       AGREGAR
                     </ion-button>
                   </div>
@@ -151,27 +150,43 @@
           </ion-row>
         </ion-grid>
       } @else {
-        <div class="empty-state-centered">
-          <div class="icon-circle-bg"><ion-icon name="restaurant-outline"></ion-icon></div>
+        <div class="empty-container">
+          <ion-icon name="restaurant-outline"></ion-icon>
           <h3>Sin resultados</h3>
           <p>No encontramos lo que buscas.</p>
         </div>
       }
-    }
 
-    <!-- Paginación -->
-    @if (totalPaginas() > 1) {
-      <div class="pagination-container">
-        <div class="pagination-buttons">
-          <ion-button fill="outline" size="small" (click)="prevPage()" [disabled]="paginaActual() === 1">
-            <ion-icon name="chevron-back-outline"></ion-icon> Anterior
-          </ion-button>
-          <ion-button fill="outline" size="small" (click)="nextPage()" [disabled]="paginaActual() === totalPaginas()">
-            Siguiente <ion-icon name="chevron-forward-outline"></ion-icon>
-          </ion-button>
+      <!-- Paginación -->
+      @if (totalPaginas() > 1) {
+        <div class="pagination-container">
+          <div class="pagination-btns">
+            <ion-button
+              fill="clear"
+              (click)="prevPage()"
+              [disabled]="paginaActual() === 1"
+            >
+              <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+            <div class="page-dot active"></div>
+            <ion-button
+              fill="clear"
+              (click)="nextPage()"
+              [disabled]="paginaActual() === totalPaginas()"
+            >
+              <ion-icon
+                name="chevron-forward-outline"
+                slot="icon-only"
+              ></ion-icon>
+            </ion-button>
+          </div>
+
+          <div class="page-indicator">
+            Página <strong>{{ paginaActual() }}</strong> de
+            <strong>{{ totalPaginas() }}</strong>
+          </div>
         </div>
-        <div class="page-info">Página {{ paginaActual() }} de {{ totalPaginas() }}</div>
-      </div>
+      }
     }
   </div>
 </ion-content>

@@ -34,7 +34,6 @@ import { CurrencyPipe } from '@angular/common';
   templateUrl: './pedido.confirmar.component.html',
   imports: [
     IonNote,
-    IonText,
     IonTextarea,
     IonButton,
     IonInput,
@@ -88,7 +87,7 @@ export class PedidoConfirmarComponent implements OnInit {
 
   // Cargar automáticamente nombre y teléfono del usuario
   cargarDatosUsuario() {
-    const user = this.authService.getUsuarioLogueado();
+    const user = this.authService.getUsuario();
     if (user) {
       this.frmCheckout.patchValue({
         nombreCliente: user.nombreCompleto,
@@ -121,7 +120,7 @@ export class PedidoConfirmarComponent implements OnInit {
 
     // Mapeamos al objeto IPedido que espera el Backend
     const pedido: IPedido = {
-      idUsuario: this.authService.getUsuarioLogueado()!.id,
+      idUsuario: this.authService.getUsuario()!.id,
       nombreCliente: this.frmCheckout.value.nombreCliente,
       telefono: this.frmCheckout.value.telefono,
       direccionEnvio: this.frmCheckout.value.direccionEnvio,
@@ -132,6 +131,8 @@ export class PedidoConfirmarComponent implements OnInit {
         cantidad: i.cantidad,
         precioUnitario: i.precioUnitario,
       })),
+      latitud: 0,
+      longitud: 0,
     };
 
     this.pedidoService.crearPedido(pedido).subscribe({
@@ -144,10 +145,12 @@ export class PedidoConfirmarComponent implements OnInit {
           null,
           'Entendido',
         );
-        this.router.navigate(['/cliente/home'], { replaceUrl: true });
+        this.router.navigate(['/home/cliente/dashboard'], { replaceUrl: true });
       },
       error: async (err) => {
         await this.interaction.dismissLoading();
+        console.error('Error al enviar pedido:', err);
+
         this.interaction.showToast(
           'No se pudo procesar el pedido. Intenta de nuevo.',
           'danger',

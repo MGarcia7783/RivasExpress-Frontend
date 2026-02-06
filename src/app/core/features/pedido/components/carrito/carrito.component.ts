@@ -1,5 +1,4 @@
-import { routes } from './../../../../../app.routes';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { Router } from '@angular/router';
 import {
@@ -12,6 +11,8 @@ import {
   IonIcon,
   IonContent,
   IonFooter,
+  IonRefresher,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { CurrencyPipe } from '@angular/common';
 import { InteractionService } from 'src/app/shared/interaction.service';
@@ -30,7 +31,7 @@ import { InteractionService } from 'src/app/shared/interaction.service';
     IonButtons,
     IonToolbar,
     IonHeader,
-    CurrencyPipe
+    CurrencyPipe,
   ],
 })
 export class CarritoComponent {
@@ -42,11 +43,11 @@ export class CarritoComponent {
   // Navegar a la pantalla de chekout para confirmar orden
   irAlCheckout() {
     this.interaction.blurActiveElement();
-    this.router.navigate(['/cliente/checkout']);
+    this.router.navigate(['/home/cliente/checkout']);
   }
 
   // Volver a la lista de productos
   seguirComprando() {
-    this.router.navigate(['/cliente/home']);
+    this.router.navigate(['/home/cliente/dashboard']);
   }
 }

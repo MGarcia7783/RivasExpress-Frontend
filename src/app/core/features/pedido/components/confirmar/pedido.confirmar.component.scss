@@ -1,128 +1,105 @@
-.register-page {
-  --background: #f8f9fc;
+/* =========================================================
+   TARJETA RESUMEN DEL PEDIDO (ESTILO TICKET)
+   ========================================================= */
+.order-summary-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--color-white);
+  border-radius: 20px;
+  padding: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 14px rgba(20, 40, 80, 0.05);
+  border: 1px solid #f1f5f9;
+}
 
-  .register-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    min-height: 100%;
+/* Fila de producto */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
 
-    .logo-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+/* Cantidad y nombre */
+.qty-name {
+  color: #333;
+  font-weight: 500;
+}
 
-    .logo-circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: var(--ion-color-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 26px rgba(var(--ion-color-primary-rgb), 0.2);
-      margin-bottom: 15px;
+/* Precio */
+.price {
+  color: #1e293b;
+  font-weight: 700;
+}
 
-      .logo-icon {
-        font-size: 38px;
-        color: #ffffff;
-      }
-    }
+/* Línea divisoria */
+.dashed-line {
+  border-top: 2px dashed #e2e8f0;
+  margin: 15px 0;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #334155;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
+/* Total */
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    /* ESTILO TICKET DE RESUMEN */
-    .order-summary-card {
-      width: 100%;
-      max-width: 400px;
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 6px 14px rgba(20, 40, 80, 0.05);
-      border: 1px solid #f1f5f9;
+.total-row span {
+  font-weight: 700;
+  color: #333;
+}
 
-      .summary-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-        font-size: 0.95rem;
+.total-row strong {
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  font-weight: 900;
+}
 
-        .qty-name { color: #475569; font-weight: 500; }
-        .price { color: #1e293b; font-weight: 700; }
-      }
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+form {
+  width: 100%;
+  max-width: 400px;
+}
 
-      .dashed-line {
-        border-top: 2px dashed #e2e8f0;
-        margin: 15px 0;
-      }
+/* Etiquetas de sección */
+.section-label {
+  font-weight: 700;
+  color: #64748b;
+  margin: 10px 0 12px 5px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-      .total-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        span { font-weight: 700; color: #64748b; }
-        strong { font-size: 1.4rem; color: var(--ion-color-primary); font-weight: 900; }
-      }
-    }
+/* =========================================================
+   INPUTS PERSONALIZADOS
+   ========================================================= */
+.custom-input-item {
+  --background: var(--color-white);
+  --border-radius: 12px;
+  --padding-start: 15px;
+  --color: var(--text-body);
+  --highlight-color-focused: var(--color-primary);
+  --highlight-color-valid: var(--color-primary);
+  margin-bottom: 14px;
+  box-shadow: 0 6px 14px var(--shadow-soft);
+  align-items: center;
+}
 
-    form {
-      width: 100%;
-      max-width: 400px;
+/* Inputs y textarea */
+.custom-input-item ion-input,
+.custom-input-item ion-textarea {
+  --color: var(--text-body);
+  font-weight: 600;
+}
 
-      .section-label {
-        font-weight: 700;
-        color: #64748b;
-        margin: 10px 0 12px 5px;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-    }
+/* =========================================================
+   MENSAJE INFERIOR
+   ========================================================= */
 
-    .custom-input-item {
-      --background: #ffffff;
-      --border-radius: 12px;
-      --padding-start: 15px;
-      --padding-end: 15px;
-      margin-bottom: 12px;
-      box-shadow: 0 6px 14px rgba(20, 40, 80, 0.06);
-      border: 1px solid #eef2f7;
-
-      ion-input, ion-textarea {
-        --color: #1e293b;
-        font-weight: 600;
-      }
-    }
-
-    ion-text {
-      display: block;
-      margin: -8px 0 15px 10px;
-    }
-
-    .btn-primary {
-      --border-radius: 12px;
-      margin-top: 20px;
-      box-shadow: 0 10px 22px rgba(var(--ion-color-primary-rgb), 0.3);
-      height: 58px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .signup {
-      margin-top: 20px;
-      text-align: center;
-      ion-note { font-size: 0.8rem; }
-    }
-  }
+.signup ion-note {
+  font-size: 0.8rem;
 }

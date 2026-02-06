@@ -1,62 +1,70 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar class="main-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/admin/home" text=""></ion-back-button>
+      <ion-back-button
+        defaultHref="/home/admin/dashboard"
+        text=""
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title>Clientes</ion-title>
+    <ion-title class="page-title" mode="ios">
+      <div class="page-title-container">
+        <h1 class="page-title-text"><span>Clientes</span></h1>
+      </div>
+    </ion-title>
   </ion-toolbar>
 
-  <ion-toolbar color="primary">
+  <ion-toolbar class="search-toolbar">
     <ion-searchbar
       mode="ios"
       placeholder="Buscar por nombre o email..."
       class="custom-search"
       (ionInput)="setFiltro($event)"
-      [debounce]="300">
+      [debounce]="300"
+    >
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="cargarUsuarios()">
-    <ion-refresher-content pullingIcon="refresh-outline" refreshingSpinner="crescent"></ion-refresher-content>
-  </ion-refresher>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarUsuarios()"> </ion-refresher>
 
   <div class="list-container">
     @if (isLoading()) {
-      @for (i of [1, 2, 3, 4, 5]; track i) {
-        <div class="custom-card-item skeleton-mode">
-          <ion-skeleton-text [animated]="true" class="skeleton-avatar"></ion-skeleton-text>
-          <div class="skeleton-body">
-            <ion-skeleton-text [animated]="true" style="width: 60%; height: 18px"></ion-skeleton-text>
-            <ion-skeleton-text [animated]="true" style="width: 40%; height: 14px"></ion-skeleton-text>
-          </div>
-        </div>
-      }
+      <div class="loader-container">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </div>
     } @else {
       <ion-list lines="none" class="bg-transparent">
         @for (user of usuariosFiltrados(); track user.id) {
           <div class="custom-card-item" (click)="verDetalle(user.id)">
             <!-- Avatar -->
-            <div class="user-avatar">
+            <div class="icon-box">
               <ion-icon name="person-outline"></ion-icon>
             </div>
 
             <!-- Información detallada -->
             <div class="info-label">
               <div class="name-row">
-                <h3>{{ user.nombreCompleto }}</h3>
+                <h2>{{ user.nombreCompleto }}</h2>
               </div>
 
-              <p class="user-email"><ion-icon name="mail-outline"></ion-icon> {{ user.userName }}</p>
-              <p class="user-phone"><ion-icon name="call-outline"></ion-icon> {{ user.phoneNumber || 'Sin teléfono' }}</p>
+              <p class="user-email">
+                <ion-icon name="mail-outline"></ion-icon> {{ user.userName }}
+              </p>
+              <p class="user-phone">
+                <ion-icon name="call-outline"></ion-icon>
+                {{ user.phoneNumber || "Sin teléfono" }}
+              </p>
 
               <div class="user-status-row">
-                <span [class]="user.esActivo ? 'badge-active' : 'badge-inactive'">
+                <span
+                  [class]="user.esActivo ? 'badge-active' : 'badge-inactive'"
+                >
                   {{ user.esActivo ? "Activo" : "Suspendido" }}
                 </span>
                 <span class="orders-count">
-                  <ion-icon name="bag-handle-outline"></ion-icon> {{ user.totalPedidos }} pedidos
+                  <ion-icon name="bag-handle-outline"></ion-icon>
+                  {{ user.totalPedidos }} pedidos
                 </span>
               </div>
             </div>
@@ -69,24 +77,44 @@
           </div>
         }
       </ion-list>
-    }
 
-    <!-- Paginación Estilizada -->
-    @if (totalPaginas() > 1) {
-      <div class="pagination-wrapper">
-        <div class="page-indicator">
-          Página <strong>{{ paginaActual() }}</strong> de <strong>{{ totalPaginas() }}</strong>
+      <!-- Paginación -->
+      @if (totalPaginas() > 1) {
+        <div class="pagination-container">
+          <div class="pagination-btns">
+            <ion-button
+              fill="clear"
+              (click)="prevPage()"
+              [disabled]="paginaActual() === 1"
+            >
+              <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+            <div class="page-dot active"></div>
+            <ion-button
+              fill="clear"
+              (click)="nextPage()"
+              [disabled]="paginaActual() === totalPaginas()"
+            >
+              <ion-icon
+                name="chevron-forward-outline"
+                slot="icon-only"
+              ></ion-icon>
+            </ion-button>
+          </div>
+
+          <div class="page-indicator">
+            Página <strong>{{ paginaActual() }}</strong> de
+            <strong>{{ totalPaginas() }}</strong>
+          </div>
         </div>
-        <div class="pagination-btns">
-          <ion-button fill="clear" (click)="prevPage()" [disabled]="paginaActual() === 1">
-            <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-          <div class="page-dot active"></div>
-          <ion-button fill="clear" (click)="nextPage()" [disabled]="paginaActual() === totalPaginas()">
-            <ion-icon name="chevron-forward-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
+      }
     }
   </div>
+
+  <!-- Fab -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="abrirFormulario()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -148,7 +148,7 @@ export class CategoriaRegistroComponent implements OnInit {
           'checkmark-circle-outline',
         );
         this.interaction.blurActiveElement();
-        this.router.navigate(['/admin/categoria']);
+        this.router.navigate(['/home/admin/categoria/listado']);
       },
       error: async (err) => {
         await this.interaction.dismissLoading();
